@@ -33,8 +33,13 @@ class Initialcreation < ActiveRecord::Migration
 		t.timestamps null: false
 	end
 
-	create_table :tags do |t|
+	create_table :question_tags do |t|
 		t.references :question
+		t.references :tag
+		t.timestamps null: false
+	end
+
+	create_table :tags do |t|
 		t.string :name
 		t.timestamps null: false
 	end

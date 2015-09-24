@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,11 +11,71 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140321144528) do
+ActiveRecord::Schema.define(version: 20150924004202) do
 
-  create_table "users", force: true do |t|
-    t.string "name"
-    t.string "email"
+  create_table "answers", force: :cascade do |t|
+    t.integer  "test_id"
+    t.boolean  "correct",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "question_tags", force: :cascade do |t|
+    t.integer  "question_id"
+    t.integer  "tag_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.integer  "test_id"
+    t.integer  "user_id"
+    t.string   "content",    null: false
+    t.string   "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.integer  "question_id"
+    t.integer  "user_id"
+    t.integer  "value"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "test_results", force: :cascade do |t|
+    t.integer  "test_id"
+    t.string   "candidate_name",  null: false
+    t.string   "candidate_email", null: false
+    t.string   "candidate_score", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  create_table "tests", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name",       null: false
+    t.string   "logo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "user_name",  null: false
+    t.string   "password",   null: false
+    t.string   "name",       null: false
+    t.string   "email",      null: false
+    t.string   "company",    null: false
+    t.string   "avatar"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
