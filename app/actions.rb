@@ -83,6 +83,7 @@ end
 
 get '/questions/new' do
   @title = 'Add a question to the library'
+  @question = Question.new
   erb :'questions/new'
 end
 
@@ -113,23 +114,55 @@ post '/tests' do
 end
 
 post '/questions' do
-  @new_question = Question.new(
-    question_content: params[:question_content],
-    name:  params[:name],
-    email: params[:email],
-    company: params[:company],
-    password: params[:password]
+  @question = Question.new(
+    user_id:  @auth_user.id,
+    content: params[:content],
+    image: params[:image_url]
   )
-  if params[:password] == params[:password_confirmation]
-    if @new_user.save
-      auth_user(@new_user)
-      redirect '/'
-    else
-      erb :'users/new'
+  if @question.save
+    all_answers = []
+    all_answers << [params[:answer1_content], params[:answer1_correct]] unless params[:answer1_content] == ""
+    all_answers << [params[:answer2_content], params[:answer2_correct]] unless params[:answer2_content] == ""
+    all_answers << [params[:answer3_content], params[:answer3_correct]] unless params[:answer3_content] == ""
+    all_answers << [params[:answer4_content], params[:answer4_correct]] unless params[:answer4_content] == ""
+    all_answers << [params[:answer5_content], params[:answer5_correct]] unless params[:answer5_content] == ""
+    all_answers.each do |answer|
+    if answer[0] != ""
+      Answer.create(
+        content: answer[0],
+        correct: answer[1],
+        question_id:@question.id
+        )
     end
-  else
-    @error = "Passwords don't match! Please try again!"
-    erb :'questions/show'
   end
+    redirect '/questions'
+  else
+    erb :'question/new'
+  end
+end
+
+# List A Question
+
+get '/questions/:id' do
+  @question = Question.find(params[:id])
+  @user = User.find(@question.user_id)
+  @title = "#{@question.content} created by #{@user.name}"
+  @other_questions_from_this_user = Question.where(user_id: @user.id).where.not(id: params[:id])
+  erb :'questions/show'
+end
+
+# Delete A Question
+
+get '/questions/delete/:id' do
+  Question.find(params[:id]).destroy
+  redirect :'questions'
+end
+
+# List All Questions
+
+get '/questions' do
+  @title = 'See all questions in our library'
+  @all_questions = Question.all.order(created_at: :desc)
+  erb :'questions/index'
 end
 
