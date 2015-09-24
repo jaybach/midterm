@@ -1,0 +1,33 @@
+header img{
+  opacity: 0.5;
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
+}
+
+.track img{
+  width: 30px;
+  float: right;
+  margin: 0 5px 0 5px;
+}
+
+.track span{
+  float: right;
+}
+
+.reset_link {
+  margin-right: 20px;
+  margin-top: 5px;
+  clear: both;
+  float: right;
+}
+
+.timestamp, .delete_review, .average_rating {
+  float: right;
+}
+
+.review {
+  color: #a1a1a1;
+}

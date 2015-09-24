@@ -1,0 +1,23 @@
+<div class="container">
+   <h1>User login</h1>
+   <br>
+  <% if @error %>
+    <div>
+      <strong>Some issues with your login, please fix them:</strong>
+      <p><%= @error %></p>
+    </div>
+  <% end %>
+  <form method="post" action="/login">
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" class="form-control" placeholder="your username comes here" name="username" value="<%= @unauth_user.username if @unauth_user %>">
+    </div>
+        <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" class="form-control" placeholder="your password comes here" name="password">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-default">Login</button>
+    </div>
+  </form>
+</div>
