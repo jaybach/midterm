@@ -1,0 +1,18 @@
+<div class="container">
+  <h1 class="average_rating">Rating: <%= @question.average_rating ? @question.average_rating.round(2) : '-' %> </h1>
+  <h1><%= @question.content  %></h1>
+  <br>
+       <ul>
+        <% Answer.where(question_id: @question.id).each do |answer| %>
+          <li><%= answer.content %> (<%= answer.correct %>)</li>
+        <% end %>
+      </ul>
+
+  <p><em><small>posted by <%= @user.name %> at <%= @question.created_at %>
+        <% if @auth_user && @question.user_id == @auth_user.id %>
+        <a href="/questions/delete/<%= @question.id %>">(delete question)</a>
+      <% end %>
+     </small></em></p>
+
+  <hr/>
+  </hr>
