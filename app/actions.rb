@@ -14,9 +14,13 @@ before do
 end
 
 # Homepage (Root path)
-get '/' do
+get '/profile' do
   @title = 'Crowd-sourced test builders'
   erb :index
+end
+
+get '/' do
+  erb :homepage
 end
 
 get '/users/new' do
@@ -64,5 +68,9 @@ end
 get '/logout' do
   session.clear
   redirect '/'
+end
+
+get '/questions' do
+  erb :'users/questions'
 end
 
