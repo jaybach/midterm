@@ -14,11 +14,11 @@
 ActiveRecord::Schema.define(version: 20150924004202) do
 
   create_table "answers", force: :cascade do |t|
-    t.integer  "test_id"
-    t.string   "content",    null: false
-    t.boolean  "correct",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "question_id"
+    t.string   "content",     null: false
+    t.boolean  "correct",     null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "question_selections", force: :cascade do |t|
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20150924004202) do
   end
 
   create_table "tests", force: :cascade do |t|
+    t.integer  "user_id"
     t.string   "name",       null: false
     t.string   "logo"
     t.datetime "created_at", null: false

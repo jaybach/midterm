@@ -1,0 +1,17 @@
+<h1><%= @test.name %></h1>
+
+<div>
+<h3> Current questions on text :</h3>
+</div>
+
+<div> 
+<h3> All questions: </h3>
+
+<% @questions.each do |question| %>
+  <div>
+    Question: <%= p question.content %>
+    Created by: <%= question.user.user_name%>
+
+</div>
+
+<% end %>

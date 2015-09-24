@@ -86,6 +86,32 @@ get '/questions/new' do
   erb :'questions/new'
 end
 
+get '/tests/new' do
+  @title = 'Here are your tests, or create a new one!'
+  @tests = Test.where(user_id: session[:user_id])
+  erb :'tests/new'
+end
+
+get '/tests/:id' do
+  @test = Test.find_by(id: params[:id])
+  @questions = Question.all
+  erb :'tests/show'
+end
+
+post '/tests' do
+  @user = User.find(session[:user_id])
+  @new_test= Test.new(
+    name: params[:name],
+    user_id: @user.id,
+    logo: nil
+    )
+  if @new_test.save
+    redirect '/tests/new'
+  else
+    erb :'tests/new'
+  end
+end
+
 post '/questions' do
   @new_question = Question.new(
     question_content: params[:question_content],
