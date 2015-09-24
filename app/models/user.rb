@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
   has_many :tests, dependent: :destroy
-  has_many :questions
+  has_many :question_selections
   has_many :ratings
 
   validates :user_name, uniqueness: true

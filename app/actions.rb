@@ -112,6 +112,11 @@ post '/tests' do
   end
 end
 
+# post '/tests/:id/edit' do
+#   @test = Test.find_by(id: params[:id])
+  
+
+
 post '/questions' do
   @new_question = Question.new(
     question_content: params[:question_content],
