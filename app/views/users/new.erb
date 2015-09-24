@@ -1,0 +1,49 @@
+<div class="container">
+   <h1>Register now</h1>
+   <br>
+  <% if @new_user && @new_user.errors.any? %>
+    <div>
+      <strong>Some issues with your registration, please fix them:</strong>
+      <ul>
+        <% @new_user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% if @error %>
+    <div>
+      <strong>Some issues with your login, please fix them:</strong>
+      <p><%= @error %></p>
+    </div>
+  <% end %>
+  <form method="post" action="/users">
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" class="form-control" placeholder="choose a username" name="username" value="<%= @new_user.username if @new_user %>">
+    </div>
+    <div class="form-group">
+      <label for="name">Your name:</label>
+      <input type="text" class="form-control" placeholder="your name" name="name" value="<%= @new_user.name if @new_user %>">
+    </div>
+    <div class="form-group">
+      <label for="name">Your email:</label>
+      <input type="text" class="form-control" placeholder="your email" name="email" value="<%= @new_user.email if @new_user %>">
+    </div>
+    <div class="form-group">
+      <label for="name">Your company:</label>
+      <input type="text" class="form-control" placeholder="your company" name="company" value="<%= @new_user.company if @new_user %>">
+    </div>
+    <div class="form-group">
+      <label for="password">Your password:</label>
+      <input type="password" class="form-control" placeholder="your password" name="password" value="<%= @new_user.password if @new_user %>">
+    </div>
+    <div class="form-group">
+      <label for="password">Confirm password:</label>
+      <input type="password" class="form-control" placeholder="your password" name="password_confirmation">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-default">Register</button>
+    </div>
+  </form>
+</div>

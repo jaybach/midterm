@@ -1,23 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!--
-    normalize.css removes cross-browser differences in defaults, e.g.,
-    differences in how form elements appear between Firefox and IE
-    See: http://necolas.github.com/normalize.css/
-  -->
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <link rel="stylesheet" href="/stylesheets/normalize.css">
-  <!--
-    application.css is where you put your styles
-  -->
   <link rel="stylesheet" href="/stylesheets/application.css">
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="/javascript/application.js"></script>
 
-  <title></title>
+  <title><%= @title %></title>
 </head>
+
 <body>
+
+  <header>
+    <div class="container">
+      <img src="../images/music_waves.png" class="img-responsive" alt="Life without music is a joke!">
+    </div>
+  </header>
+
+   <!-- Navigation bar -->
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li role="presentation"><a href="/tracks">All tracks</a></li>
+      <li role="presentation"><a href="/tracks/new">Post a new track</a></li>
+      <% if @auth_user %>
+        <li role="presentation"><a href="/logout">Log out (<%= @auth_user.name %>)</a></li>
+      <% else %>
+        <li role="presentation"><a href="/login">Login</a></li>
+        <li role="presentation"><a href="/users/new">Register</a></li>
+      <% end %>
+    </ul>
+  </div>
+
   <%= yield %>
+
 </body>
+
 </html>
