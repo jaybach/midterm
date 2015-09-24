@@ -11,11 +11,16 @@ class Initialcreation < ActiveRecord::Migration
   	end
 
   	create_table :tests do |t|
-  		t.references :user
   		t.string :name, null: false
   		t.string :logo
   		t.timestamps null: false
   	end
+
+    create_table :question_selections do |t|
+      t.references :test
+      t.references :question
+      t.timestamps null: false
+    end
 
 	create_table :test_results do |t|
 		t.references :test
@@ -26,7 +31,6 @@ class Initialcreation < ActiveRecord::Migration
 	end
 
 	create_table :questions do |t|
-		t.references :test
 		t.references :user
 		t.string :content, null: false
 		t.string :image
@@ -46,6 +50,7 @@ class Initialcreation < ActiveRecord::Migration
 
 	create_table :answers do |t|
 		t.references :test
+    t.string :content, null: false
 		t.boolean :correct, null: false
 		t.timestamps null: false
 	end

@@ -1,0 +1,54 @@
+<div class="container">
+
+   <h1>Add a question to the library:</h1>
+   <br>
+
+  <% if @auth_user %>
+
+  <form method="post" action="/questions">
+
+      <div>
+      <label for="question_content">Question:</label>
+      <input type="text" class="form-control" placeholder="e.g. To set up Dynamic Remarketing, you must do which of these things?" name="question_content" value="<%= @new_question.content if @new_question %>">
+      </div>
+
+      <div>
+      <label for="name">Your name:</label>
+      <input type="text" class="form-control" placeholder="your name" name="name" value="<%= @new_user.name if @new_user %>">
+      </div>
+
+      <div>
+      <label for="name">Your email:</label>
+      <input type="text" class="form-control" placeholder="your email" name="email" value="<%= @new_user.email if @new_user %>">
+      </div>
+
+      <div>
+      <label for="name">Your company:</label>
+      <input type="text" class="form-control" placeholder="your company" name="company" value="<%= @new_user.company if @new_user %>">
+      </div>
+
+      <div>
+      <label for="password">Your password:</label>
+      <input type="password" class="form-control" placeholder="your password" name="password" value="<%= @new_user.password if @new_user %>">
+      </div>
+
+      <div>
+      <label for="password">Confirm password:</label>
+      <input type="password" class="form-control" placeholder="your password" name="password_confirmation">
+      </div>
+
+      <div>
+      <button type="submit" class="btn btn-default">Register</button>
+      </div>
+
+  </form>
+
+  <% else %>
+
+  <div>
+      <strong>Access restricted. Please login first!</strong>
+  </div>
+
+  <% end %>
+
+</div>
