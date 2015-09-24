@@ -3,6 +3,10 @@ helpers do
   def current_user
     @auth_user = User.find(session[:user_id]) if session[:user_id]
   end
+
+  def auth_user(user)
+    session[:user_id] = user.id
+  end
 end
 
 before do
@@ -22,7 +26,7 @@ end
 
 post '/users' do
   @new_user = User.new(
-    username: params[:username],
+    user_name: params[:user_name],
     name:  params[:name],
     email: params[:email],
     company: params[:company],
@@ -30,13 +34,13 @@ post '/users' do
   )
   if params[:password] == params[:password_confirmation]
     if @new_user.save
-      session[:user_id] = @new_user.id
+      auth_user(@new_user)
       redirect '/'
     else
       erb :'users/new'
     end
   else
-    @error = 'Passwords don\'t match! Please try again!'
+    @error = "Passwords don't match! Please try again!"
     erb :'users/new'
   end
 end
@@ -47,23 +51,18 @@ get '/login' do
 end
 
 post '/login' do
-  @unauth_user = User.find_by_username(params[:username])
-  if @unauth_user
-    if @unauth_user.password == params[:password]
-      session[:user_id] = @unauth_user.id
-      redirect '/'
-    else
-      @error = 'Incorrect password!'
-      erb :'users/login'
-    end
+  @unauth_user = User.find_by(user_name: params[:user_name])
+  if @unauth_user && @unauth_user.password == params[:password]
+    auth_user(@unauth_user)
+    redirect '/'
   else
-    @error = 'Username doesn\'t exist!'
+    @error = 'Invalid credentials'
     erb :'users/login'
   end
 end
 
 get '/logout' do
   session.clear
-  redirect :'/'
+  redirect '/'
 end
 

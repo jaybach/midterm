@@ -9,8 +9,8 @@
   <% end %>
   <form method="post" action="/login">
     <div class="form-group">
-      <label for="username">Username:</label>
-      <input type="text" class="form-control" placeholder="your username comes here" name="username" value="<%= @unauth_user.username if @unauth_user %>">
+      <label for="user_name">Username:</label>
+      <input type="text" class="form-control" placeholder="your username comes here" name="user_name" value="<%= @unauth_user.user_name if @unauth_user %>">
     </div>
         <div class="form-group">
       <label for="password">Password:</label>
