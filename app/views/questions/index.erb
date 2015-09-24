@@ -1,0 +1,22 @@
+<title>All questions in the library</title>
+
+<div class="container">
+<h1>See all questions posted so far:</h1>
+<br>
+<% @all_questions.each do |question| %>
+  <div class="question">
+    <h4><a href="/questions/<%= question.id %>"><%= question.content %></a></h4>
+      <ul>
+        <% Answer.where(question_id: question.id).each do |answer| %>
+          <li><%= answer.content %> (<%= answer.correct %>)</li>
+        <% end %>
+      </ul>
+    <p><em>posted by <%= User.find(question.user_id).name %>
+      <% if @auth_user && question.user_id == @auth_user.id %>
+        <a href="/questions/delete/<%= question.id %>">(delete question)</a>
+      <% end %>
+      </em>
+    </p>
+    </hr><hr/>
+  </div>
+<% end %>
