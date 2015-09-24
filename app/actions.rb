@@ -19,6 +19,8 @@ get '/' do
   erb :index
 end
 
+# Register Page
+
 get '/users/new' do
   @title = 'Create a new user'
   erb :'users/new'
@@ -45,6 +47,8 @@ post '/users' do
   end
 end
 
+# Login Page
+
 get '/login' do
   @title = 'Log into your account'
   erb :'users/login'
@@ -61,8 +65,45 @@ post '/login' do
   end
 end
 
+# Logout
+
 get '/logout' do
   session.clear
   redirect '/'
+end
+
+# My Account Page
+
+get '/users/show' do
+  @title = "#{@auth_user.name}'s account"
+  erb :'users/show'
+end
+
+# Add New Question
+
+get '/questions/new' do
+  @title = 'Add a question to the library'
+  erb :'questions/new'
+end
+
+post '/questions' do
+  @new_question = Question.new(
+    question_content: params[:question_content],
+    name:  params[:name],
+    email: params[:email],
+    company: params[:company],
+    password: params[:password]
+  )
+  if params[:password] == params[:password_confirmation]
+    if @new_user.save
+      auth_user(@new_user)
+      redirect '/'
+    else
+      erb :'users/new'
+    end
+  else
+    @error = "Passwords don't match! Please try again!"
+    erb :'questions/show'
+  end
 end
 

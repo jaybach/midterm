@@ -11,11 +11,16 @@ class Initialcreation < ActiveRecord::Migration
   	end
 
   	create_table :tests do |t|
-  		t.references :user
   		t.string :name, null: false
   		t.string :logo
   		t.timestamps null: false
   	end
+
+    create_table :question_selections do |t|
+      t.references :test
+      t.references :question
+      t.timestamps null: false
+    end
 
 	create_table :test_results do |t|
 		t.references :test
