@@ -25,8 +25,13 @@ class Initialcreation < ActiveRecord::Migration
 		t.timestamps null: false
 	end
 
-	create_table :questions do |t|
+	create_table :question_selections do |t|
 		t.references :test
+		t.references :question
+		t.timestamps null: false
+	end
+
+	create_table :questions do |t|
 		t.references :user
 		t.string :content, null: false
 		t.string :image
@@ -46,6 +51,7 @@ class Initialcreation < ActiveRecord::Migration
 
 	create_table :answers do |t|
 		t.references :test
+		t.string :content, null: false
 		t.boolean :correct, null: false
 		t.timestamps null: false
 	end
