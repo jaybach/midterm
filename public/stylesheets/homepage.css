@@ -1,0 +1,60 @@
+body {
+  background-color: #800000;
+}
+
+span {
+  /*background: #800000;*/
+  border-radius: 20px;
+ /* background: linear-gradient(0, 0, 0, 0);*/
+  color: white;
+  text-shadow: 0.5px 0.5px #800000;
+ padding: 5px;
+}
+
+span2 {
+  /*background: #800000;*/
+ /* background: linear-gradient(0, 0, 0, 0);*/
+  color: white;
+  text-shadow: 0.5px 0.5px #800000;
+ padding: 5px;
+}
+
+.top {
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)
+    ),
+    url(../images/business.jpg);
+  background-size: cover;
+  margin-left: 50px;
+  padding: 200px;
+  position: absolute;
+  width: 60%;
+}
+
+
+.image1 {
+  border: 1px solid;
+  border-color: #800000;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+h1 {
+  position: relative;
+  text-align: center;
+}
+
+h2 {
+  position: relative;
+  text-align: center;
+}
+
+.bottom {
+  /*clear: both;*/
+  display: inline-block;
+}
+
+/*  <img class="image1" src="/images/business.jpg">*/
