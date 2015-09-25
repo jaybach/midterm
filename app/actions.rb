@@ -176,9 +176,36 @@ end
 
 # List All Questions
 
-get '/questions' do
+get '/allquestions' do
   @title = 'See all questions in our library'
   @all_questions = Question.all.order(created_at: :desc)
   erb :'questions/index'
 end
 
+# List A Subset Of Questions
+
+get '/questions' do
+  @questions_per_page = 5
+  @all_questions = Question.all.order(created_at: :desc)
+  if params[:sort_by]
+    case params[:sort_by]
+    when 'rating'
+      @all_questions = Question.all.order(average_rating: :desc)
+    when 'popularity'
+      @all_questions = Question.all.order(ratings_count: :desc)
+    end
+  end
+  if params[:limit]
+    @all_questions = @all_questions.limit(params[:limit])
+  else
+    @all_questions = @all_questions.limit(@questions_per_page)
+  end
+  if params[:offset]
+    @all_questions = @all_questions.offset(params[:offset])
+  end
+  if params[:term]
+    @all_questions = @all_questions.where('username LIKE ? OR bio LIKE ?', "%#{term}%")
+  end
+  @all_questions
+  erb :'questions/index'
+end
