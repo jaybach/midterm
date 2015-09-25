@@ -99,15 +99,15 @@ end
 
 get '/tests/new' do
   @title = 'Here are your tests, or create a new one!'
-  @tests = Test.where(user_id: session[:user_id])
+  @test = Test.new
+  @user_tests = Test.where(user_id: session[:user_id]) # should do a partial here
   erb :'tests/new'
 end
 
 post '/tests' do
-  @user = User.find(session[:user_id])
   @new_test= Test.new(
     name: params[:name],
-    user_id: @user.id,
+    user_id: @auth_user.id,
     logo: nil
     )
   if @new_test.save
@@ -121,33 +121,40 @@ end
 
 get '/tests/:id' do
   @test = Test.find_by(id: params[:id])
-  @questions = Question.all
+  current_questions = QuestionSelection.where(test_id: @test.id)
+  current_questions_ids = []
+  current_questions.each do |qt_combination|
+    current_questions_ids << qt_combination.question_id
+  end
+  @questions = Question.all.where("id NOT IN (?)", current_questions_ids)
   erb :'tests/show'
 end
 
-# Edit An Existing Test
+# Edit An Existing Test (Add Questions To Test)
 
 post '/tests/:id/edit' do
-  question_id = params[:question_id].to_i
-  test_id = params[:test_id].to_i
+  @question_id = params[:question_id].to_i
+  @test_id = params[:test_id].to_i
   @question_added = QuestionSelection.create(
-   question_id: question_id,
-    test_id: test_id
+   question_id: @question_id,
+    test_id: @test_id
     )
   if @question_added.save
     @test = Test.find_by(id: params[:id])
-    redirect '/tests/new'
+    redirect "tests/#{@test_id}"
   else
     redirect '/'
   end
 end
 
+# Edit An Existing Test (Remove Questions From A Test)
+
 post '/tests/:id/destroy' do
+  @test_id = params[:test_id].to_i
   @question = QuestionSelection.where(question_id: params[:question_id]).where(test_id: params[:test_id])
   QuestionSelection.destroy(@question)
-  erb :'/tests/new'
+  redirect "tests/#{@test_id}"
 end
-
 
 # Add New Question
 
