@@ -26,12 +26,12 @@ end
 # Homepage (Root path)
 get '/' do
   @title = 'Crowd-sourced test builders'
-  @tag1_questions = tagged_questions(1)
-  @tag2_questions = tagged_questions(2)
-  @tag3_questions = tagged_questions(3)
-  @tag4_questions = tagged_questions(4)
-  @tag5_questions = tagged_questions(5)
-  @tag6_questions = tagged_questions(6)
+  # @tag1_questions = tagged_questions(1)
+  # @tag2_questions = tagged_questions(2)
+  # @tag3_questions = tagged_questions(3)
+  # @tag4_questions = tagged_questions(4)
+  # @tag5_questions = tagged_questions(5)
+  # @tag6_questions = tagged_questions(6)
   erb :index
 end
 
@@ -126,7 +126,10 @@ get '/tests/:id' do
   current_questions.each do |qt_combination|
     current_questions_ids << qt_combination.question_id
   end
-  @questions = Question.all.where("id NOT IN (?)", current_questions_ids)
+  @questions = Question.all.where("id NOT IN (?)", current_questions_ids) unless current_questions_ids.empty?
+  if current_questions_ids.empty?
+    @questions = Question.all
+  end
   erb :'tests/show'
 end
 
@@ -145,6 +148,14 @@ post '/tests/:id/edit' do
   else
     redirect '/'
   end
+end
+
+#   @id = params[:id]
+  # mailto: "" content = " /tests/<%=@id%>"
+get '/tests/:id/test_results/new' do 
+  @test = Test.find_by(id: params[:id])
+  @new_result = TestResult.new
+  erb :'tests/test_results/new'
 end
 
 # Edit An Existing Test (Remove Questions From A Test)
@@ -187,11 +198,13 @@ post '/questions' do
         question_id:@question.id
         )
 
-    @tags.each do |tag_name|
-      QuestionTag.create(
-        question_id: @question.id,
-        tag_id: Tag.find_by(name: tag_name).id
-        )
+    if @tags
+        @tags.each do |tag_name|
+          QuestionTag.create(
+          question_id: @question.id,
+          tag_id: Tag.find_by(name: tag_name).id
+          )
+      end
     end
 
     end

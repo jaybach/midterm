@@ -3,7 +3,7 @@
   <h1 class="average_rating">Rating: <%= @question.average_rating ? @question.average_rating.round(2) : '-' %> </h1>
   <h1><%= @question.content  %></h1>
 
-  <% unless @question.image == "" %>
+  <% unless @question.image == "" || @question.image == nil %>
     <img src="<%= @question.image %>" alt="Question <%= @question.id %>'s attachment">
   <% end %>
 

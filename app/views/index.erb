@@ -9,7 +9,7 @@
   <p><a class="tag4_filter_button" href="#tag4">Tag 4</a></p>
   <p><a class="tag5_filter_button" href="#tag5">Tag 5</a></p>
   <p><a class="tag5_filter_button" href="#tag6">Tag 6</a></p>
-
+<% if !Question.all.empty?%>
   <ul class="all no_tag">
     <% Question.all.each do |question| %>
       <div class="question">
@@ -66,4 +66,6 @@
   </ul>
 
 </div>
+
+<% end %>
 
