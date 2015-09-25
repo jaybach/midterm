@@ -87,13 +87,6 @@ get '/tests/new' do
   erb :'tests/new'
 end
 
-get '/tests/:id' do
-  @test = Test.find_by(id: params[:id])
-  @questions = Question.all
-  erb :'tests/show'
-end
-
-
 post '/tests' do
   @user = User.find(session[:user_id])
   @new_test= Test.new(
@@ -106,6 +99,14 @@ post '/tests' do
   else
     erb :'tests/new'
   end
+end
+
+# Show A Test
+
+get '/tests/:id' do
+  @test = Test.find_by(id: params[:id])
+  @questions = Question.all
+  erb :'tests/show'
 end
 
 # Edit An Existing Test
@@ -179,7 +180,7 @@ post '/questions' do
   end
 end
 
-# List A Question
+# Show A Question
 
 get '/questions/:id' do
   @question = Question.find(params[:id])
@@ -191,7 +192,7 @@ end
 
 # Delete A Question
 
-get '/questions/delete/:id' do
+get '/questions/:id/delete' do
   Question.find(params[:id]).destroy
   redirect :'questions'
 end
@@ -222,4 +223,16 @@ get '/questions' do
   end
   @all_questions
   erb :'questions/index'
+end
+
+# Show A Tag
+
+get '/tags/:id' do
+  @tag = Tag.find(params[:id])
+  @tagged_questions = []
+  QuestionTag.where(tag_id: @tag.id).each do |qt_combination|
+    @tagged_questions << Question.find(qt_combination.question_id.to_i)
+  end
+  @title = "All questions tagged with: #{@tag.name}"
+  erb :'tags/show'
 end

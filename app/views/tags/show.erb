@@ -1,0 +1,20 @@
+<div class="container">
+  <h1>Questions under: <%= @tag.name  %></h1>
+  <% @tagged_questions.each do |question| %>
+  <div class="question">
+    <h4><a href="/questions/<%= question.id %>"><%= question.content %></a></h4>
+      <ul>
+        <% Answer.where(question_id: question.id).each do |answer| %>
+          <li><%= answer.content %> (<%= answer.correct %>)</li>
+        <% end %>
+      </ul>
+    <p><em>posted by <%= User.find(question.user_id).name %>
+      <% if @auth_user && question.user_id == @auth_user.id %>
+        <a href="/questions/<%= question.id %>/delete">(delete question)</a>
+      <% end %>
+      </em>
+    </p>
+    </hr><hr/>
+  </div>
+  <% end %>
+</div>
