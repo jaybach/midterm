@@ -111,7 +111,7 @@ post '/tests' do
     logo: nil
     )
   if @new_test.save
-    redirect '/tests/new'
+    redirect "/tests/#{@new_test.id}"
   else
     erb :'tests/new'
   end
@@ -126,16 +126,17 @@ get '/tests/:id' do
   current_questions.each do |qt_combination|
     current_questions_ids << qt_combination.question_id
   end
-  @questions = Question.all.where("id NOT IN (?)", current_questions_ids) unless current_questions_ids.empty?
   if current_questions_ids.empty?
     @questions = Question.all
+  else
+    @questions = Question.all.where("id NOT IN (?)", current_questions_ids)
   end
   erb :'tests/show'
 end
 
 # Edit An Existing Test (Add Questions To Test)
 
-post '/tests/:id/edit' do
+post '/question-selections' do
   @question_id = params[:question_id].to_i
   @test_id = params[:test_id].to_i
   @question_added = QuestionSelection.create(
@@ -160,10 +161,12 @@ end
 
 # Edit An Existing Test (Remove Questions From A Test)
 
-post '/tests/:id/destroy' do
-  @test_id = params[:test_id].to_i
-  @question = QuestionSelection.where(question_id: params[:question_id]).where(test_id: params[:test_id])
-  QuestionSelection.destroy(@question)
+# Remove Questions From A Test
+
+delete '/question-selections/:id' do
+  @question = QuestionSelection.find(params[:id])
+  @test_id = @question.test_id
+  @question.destroy
   redirect "tests/#{@test_id}"
 end
 
@@ -176,6 +179,7 @@ get '/questions/new' do
 end
 
 post '/questions' do
+
   @tags = params[:tags]
   @question = Question.new(
     user_id:  @auth_user.id,
@@ -191,28 +195,28 @@ post '/questions' do
     all_answers << [params[:answer4_content], params[:answer4_correct]] unless params[:answer4_content] == ""
     all_answers << [params[:answer5_content], params[:answer5_correct]] unless params[:answer5_content] == ""
     all_answers.each do |answer|
-    if answer[0] != ""
-      Answer.create(
+      if answer[0] != ""
+        Answer.create(
         content: answer[0],
         correct: answer[1],
         question_id:@question.id
         )
 
-    if @tags
-        @tags.each do |tag_name|
-          QuestionTag.create(
-          question_id: @question.id,
-          tag_id: Tag.find_by(name: tag_name).id
-          )
+        if @tags
+          @tags.each do |tag_name|
+            QuestionTag.create(
+            question_id: @question.id,
+            tag_id: Tag.find_by(name: tag_name).id
+            )
+            end
+        end
       end
     end
-
-    end
-  end
     redirect '/questions'
   else
-    erb :'questions/new'
+    redirect 'questions/new'
   end
+
 end
 
 # Show A Question
