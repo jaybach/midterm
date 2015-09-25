@@ -99,6 +99,7 @@ get '/tests/:id' do
   erb :'tests/show'
 end
 
+
 post '/tests' do
   @user = User.find(session[:user_id])
   @new_test= Test.new(
@@ -122,10 +123,16 @@ post '/tests/:id/edit' do
     )
   if @question_added.save
     @test = Test.find_by(id: params[:id])
-    redirect '/tests/'
+    redirect '/tests/new'
   else
-   erb :'tests/:id'
+    redirect '/'
   end
+end
+
+post '/tests/:id/destroy' do
+  @question = QuestionSelection.where(question_id: params[:question_id]).where(test_id: params[:test_id])
+  QuestionSelection.destroy(@question)
+  erb :'/tests/new'
 end
 
 
