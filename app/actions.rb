@@ -113,9 +113,20 @@ post '/tests' do
   end
 end
 
-# post '/tests/:id/edit' do
-#   @test = Test.find_by(id: params[:id])
-  
+post '/tests/:id/edit' do
+  question_id = params[:question_id].to_i
+  test_id = params[:test_id].to_i
+  @question_added = QuestionSelection.create(
+   question_id: question_id,
+    test_id: test_id
+    )
+  if @question_added.save
+    @test = Test.find_by(id: params[:id])
+    redirect '/tests/'
+  else
+   erb :'tests/:id'
+  end
+end
 
 
 post '/questions' do

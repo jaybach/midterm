@@ -1,20 +1,31 @@
-<h1><%= @test.name %></h1>
-
+<h1><%= @test.name if @test %></h1>
 <div>
 
 <h3> Current questions on test :</h3>
+<% @test.questions.each do |question| %>
+	<div>
+	Question #<%=question.id%>: <%= p question.content %>
+    Created by: <%= question.user.user_name%>
 
 </div>
 
+<% end %>
+
+
 <div> 
 <h3> All questions: </h3>
+
+
 
 <% @questions.each do |question| %>
   <div>
     Question #<%=question.id%>: <%= p question.content %>
     Created by: <%= question.user.user_name%>
-
-    <input type="submit" value = "Add question to test" action = "/test/:id/edit">
+    <form method = "post" action = "/tests/:id/edit">
+    	<input type="submit" value = "Add question to test">
+    	<input type ="hidden" name= "question_id" value = "<%=question.id%>">
+    	<input type ="hidden" name = "test_id" value = "<%= @test.id%>">
+	</form>
   </div>
 
 <% end %>
