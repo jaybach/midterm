@@ -12,4 +12,8 @@ class Question < ActiveRecord::Base
     self.ratings.average(:value)
   end
 
+  def ratings_count
+    self.ratings.count
+  end
+
 end

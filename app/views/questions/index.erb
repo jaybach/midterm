@@ -1,5 +1,8 @@
 <title>All questions in the library</title>
 
+<a href="/questions?sort_by=rating">Sort by rating</a>
+<a href="/questions?sort_by=popularity">Sort by popularity</a>
+
 <div class="container">
 <h1>See all questions posted so far:</h1>
 <br>
@@ -19,4 +22,10 @@
     </p>
     </hr><hr/>
   </div>
+<% end %>
+
+<% if params[:offset].to_i + params[:limit].to_i < Question.count %>
+  <a href="questions?limit=<%= params[:limit] || 5 %>&offset=<%= ((params[:limit] || 5).to_i + (params[:offset] || 0).to_i).to_s %>">See more</a>
+<% else %>
+  <a href="questions">Back to first page</a>
 <% end %>
