@@ -1,3 +1,5 @@
+<% if @auth_user %>
+
 <h1><%= @test.name if @test %></h1>
 <div>
 
@@ -6,6 +8,11 @@
 	<div>
 	Question #<%=question.id%>: <%= p question.content %>
     Created by: <%= question.user.user_name%>
+	<form method = "post" action = "/tests/:id/destroy">
+    	<input type ="hidden" name= "question_id" value = "<%=question.id%>">
+    	<input type ="hidden" name = "test_id" value = "<%= @test.id%>">
+		<input type="submit" value= "delete">
+	</form> </p>
 
 </div>
 
@@ -29,3 +36,25 @@
   </div>
 
 <% end %>
+
+<h3> Questions I wrote: </h3>
+
+	<% @questions.each do |question| %>
+	<% if question.user_id == session[:user_id] %>
+		<div>
+			Question #<%=question.id%>: <%= p question.content %>
+
+    	<form method = "post" action = "/tests/:id/edit">
+    	<input type="submit" value = "Add question to test">
+    	<input type ="hidden" name= "question_id" value = "<%=question.id%>">
+    	<input type ="hidden" name = "test_id" value = "<%= @test.id%>">
+	</form>
+		</div>
+	<% end %>
+	<% end %>
+	<% else %>
+	<div>
+    <strong>Access restricted. Please login first!</strong>
+  </div>
+
+  <% end %>
