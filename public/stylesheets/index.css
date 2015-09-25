@@ -23,9 +23,10 @@
 }
 
 #toggleLog {
-  background-color: #c0c0c0;
+  background-color: #800000;
   border: 1px solid black;
   border-radius: 4px;
+  color: white;
   cursor: pointer;
   display: inline-block;
   float: right;
@@ -44,7 +45,7 @@
 }
 
 .panel {
-  background-color: #d3d3d3;
+  background-color: #D3D3D3;
   border: 1px solid black;
   border-radius: 4px;
   padding-left: 10px;
@@ -58,8 +59,10 @@ img {
 .image1 {
   border-radius: 4px;
   display: block;
+  height: 242px;
   margin-top: 5px;
   margin-left: -2px;
+  width: 302px;
 }
 
 .section {

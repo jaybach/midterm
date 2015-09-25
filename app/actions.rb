@@ -71,6 +71,6 @@ get '/logout' do
 end
 
 get '/questions' do
-  erb :'users/questions'
+  erb :questions
 end
 
