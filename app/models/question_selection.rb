@@ -1,4 +1,4 @@
-class QuestionSelection < ActiveRecord::Base 
+class QuestionSelection < ActiveRecord::Base
 	self.table_name = "question_selections"
 	belongs_to :question
 	belongs_to :test

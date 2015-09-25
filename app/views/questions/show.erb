@@ -8,6 +8,13 @@
         <% end %>
       </ul>
 
+      <h4>Tags:</h4>
+      <ul>
+        <% QuestionTag.where(question_id: @question.id).each do |qt_combination| %>
+          <li><%= Tag.find(qt_combination.tag_id.to_i).name %></li>
+        <% end %>
+      </ul>
+
   <p><em><small>posted by <%= @user.name %> at <%= @question.created_at %>
         <% if @auth_user && @question.user_id == @auth_user.id %>
         <a href="/questions/delete/<%= @question.id %>">(delete question)</a>
@@ -16,3 +23,11 @@
 
   <hr/>
   </hr>
+
+      <h4>Other questions from this user:</h4>
+    <% @other_questions_from_this_user.each do |question| %>
+      <div class="question">
+        <p><a href="/questions/<%= question.id %>"><%= question.content %></a> <em><small>posted by <%= @user.name  %> at <%= @question.created_at  %></small></em></p>
+        </p>
+      </div>
+    <% end %>

@@ -79,13 +79,7 @@ get '/users/show' do
   erb :'users/show'
 end
 
-# Add New Question
-
-get '/questions/new' do
-  @title = 'Add a question to the library'
-  @question = Question.new
-  erb :'questions/new'
-end
+# Add New Test
 
 get '/tests/new' do
   @title = 'Here are your tests, or create a new one!'
@@ -113,6 +107,8 @@ post '/tests' do
   end
 end
 
+# Edit An Existing Test
+
 post '/tests/:id/edit' do
   question_id = params[:question_id].to_i
   test_id = params[:test_id].to_i
@@ -129,13 +125,24 @@ post '/tests/:id/edit' do
 end
 
 
+# Add New Question
+
+get '/questions/new' do
+  @title = 'Add a question to the library'
+  @question = Question.new
+  erb :'questions/new'
+end
+
 post '/questions' do
+  @tags = params[:tags]
+  binding.pry
   @question = Question.new(
     user_id:  @auth_user.id,
     content: params[:content],
     image: params[:image_url]
   )
   if @question.save
+
     all_answers = []
     all_answers << [params[:answer1_content], params[:answer1_correct]] unless params[:answer1_content] == ""
     all_answers << [params[:answer2_content], params[:answer2_correct]] unless params[:answer2_content] == ""
@@ -149,11 +156,19 @@ post '/questions' do
         correct: answer[1],
         question_id:@question.id
         )
+
+    @tags.each do |tag_name|
+      QuestionTag.create(
+        question_id: @question.id,
+        tag_id: Tag.find_by(name: tag_name).id
+        )
+    end
+
     end
   end
     redirect '/questions'
   else
-    erb :'question/new'
+    erb :'questions/new'
   end
 end
 
@@ -174,15 +189,7 @@ get '/questions/delete/:id' do
   redirect :'questions'
 end
 
-# List All Questions
-
-get '/allquestions' do
-  @title = 'See all questions in our library'
-  @all_questions = Question.all.order(created_at: :desc)
-  erb :'questions/index'
-end
-
-# List A Subset Of Questions
+# List All Questions Organized By Page
 
 get '/questions' do
   @questions_per_page = 5

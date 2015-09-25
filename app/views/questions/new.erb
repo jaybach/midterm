@@ -16,6 +16,15 @@
       </div>
 
       <div>
+        <label for="content">Add some tags to your question:</label>
+        <select multiple name="tags[]">
+        <% Tag.all.each do |tag| %>
+            <option value="<%= tag.name %>"><%= tag.name %></option>
+        <% end %>
+        </select>
+      </div>
+
+      <div>
         <label for="image">Embed an image in your question:</label>
         <input type="url" placeholder="image url" name="image_url" value="<%= @new_question.image if @new_question %>">
       </div>
