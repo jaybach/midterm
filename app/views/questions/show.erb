@@ -1,6 +1,12 @@
 <div class="container">
+
   <h1 class="average_rating">Rating: <%= @question.average_rating ? @question.average_rating.round(2) : '-' %> </h1>
   <h1><%= @question.content  %></h1>
+
+  <% unless @question.image == "" %>
+    <img src="<%= @question.image %>" alt="Question <%= @question.id %>'s attachment">
+  <% end %>
+
   <br>
        <ul>
         <% Answer.where(question_id: @question.id).each do |answer| %>
@@ -20,6 +26,42 @@
         <a href="/questions/<%= @question.id %>/delete">(delete question)</a>
       <% end %>
      </small></em></p>
+
+   <% if @auth_user %>
+    <% if Rating.where(user_id: @auth_user.id).where(question_id: @question.id) != [] %>
+      <p>You've already rated this question.</p>
+    <% else %>
+      <%= erb :'ratings/new' %>
+    <% end %>
+   <% else %>
+    <p>You have to be logged in to access this page!</p>
+   <% end %>
+
+  <% if Rating.where(question_id: @question.id) != [] %>
+    <h3>Ratings for this track:</h3>
+    <% Rating.where(question_id: @question.id).each do |rating| %>
+      <div class="rating">
+          <p class="timestamp"><small><em><%= rating.created_at %></em></small></p>
+          <p><strong>Posted by:</strong> <%= User.find_by_id(rating.user_id).name %></p>
+          <% if @auth_user && rating.user_id == @auth_user.id %>
+            <p class="delete_rating"><a href="/ratings/delete/<%= rating.id %>">(delete)</a></p>
+          <% end %>
+          <% if rating.value %>
+            <% rating.value.times do %>
+              <i class="fa fa-star"></i>
+            <% end %>
+            <% (5 - rating.value).times do %>
+              <i class="fa fa-star-o"></i>
+            <% end %>
+          <% end %></p>
+          <br>
+      </div>
+   <% end %>
+   <hr/></hr>
+   <% else %>
+    <p>No ratings yet.</p>
+    <hr/></hr>
+   <% end %>
 
   <hr/>
   </hr>

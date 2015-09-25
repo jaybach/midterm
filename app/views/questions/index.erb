@@ -8,18 +8,31 @@
 <br>
 <% @all_questions.each do |question| %>
   <div class="question">
-    <h4><a href="/questions/<%= question.id %>"><%= question.content %></a></h4>
-      <ul>
-        <% Answer.where(question_id: question.id).each do |answer| %>
-          <li><%= answer.content %> (<%= answer.correct %>)</li>
-        <% end %>
-      </ul>
+
+    <h4><a href="/questions/<%= question.id %>"><%= question.content %></a>
+      <% unless question.image == "" %>
+        <em>(attachment included)</em>
+      <% end %>
+    </h4>
+    <p>
+      <% unless question.average_rating == 0 %>
+        <em>rating: <%= question.average_rating %></em>
+      <% end %>
+    </p>
+
     <p><em>posted by <%= User.find(question.user_id).name %>
       <% if @auth_user && question.user_id == @auth_user.id %>
         <a href="/questions/<%= question.id %>/delete">(delete question)</a>
       <% end %>
       </em>
     </p>
+
+      <ul>
+        <% Answer.where(question_id: question.id).each do |answer| %>
+          <li><%= answer.content %> (<%= answer.correct %>)</li>
+        <% end %>
+      </ul>
+
     <p>Tags</p>
     <p>
       <ul>
@@ -36,8 +49,10 @@
   <a href="questions?limit=<%= params[:limit] || 5 %>&offset=<%= ((params[:offset] || 0).to_i - (params[:limit] || 5).to_i).to_s %>">Prev</a>
 <% end %>
 
-<% if params[:offset].to_i + params[:limit].to_i < Question.count %>
-  <a href="questions?limit=<%= params[:limit] || 5 %>&offset=<%= ((params[:limit] || 5).to_i + (params[:offset] || 0).to_i).to_s %>">Next</a>
-<% else %>
+<% if params[:offset].to_i + params[:limit].to_i > Question.count %>
   <a href="questions">Back to first page</a>
+<% else %>
+  <% unless Question.count < 5 %>
+    <a href="questions?limit=<%= params[:limit] || 5 %>&offset=<%= ((params[:limit] || 5).to_i + (params[:offset] || 0).to_i).to_s %>">Next</a>
+  <% end %>
 <% end %>

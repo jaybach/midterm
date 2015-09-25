@@ -7,6 +7,16 @@ helpers do
   def auth_user(user)
     session[:user_id] = user.id
   end
+
+  def tagged_questions(id)
+    tag = Tag.find(id)
+    tagged_questions = []
+    QuestionTag.where(tag_id: tag.id).each do |qt_combination|
+      tagged_questions << Question.find(qt_combination.question_id.to_i)
+    end
+    return tagged_questions
+  end
+
 end
 
 before do
@@ -16,6 +26,12 @@ end
 # Homepage (Root path)
 get '/' do
   @title = 'Crowd-sourced test builders'
+  @tag1_questions = tagged_questions(1)
+  @tag2_questions = tagged_questions(2)
+  @tag3_questions = tagged_questions(3)
+  @tag4_questions = tagged_questions(4)
+  @tag5_questions = tagged_questions(5)
+  @tag6_questions = tagged_questions(6)
   erb :index
 end
 
@@ -143,7 +159,6 @@ end
 
 post '/questions' do
   @tags = params[:tags]
-  binding.pry
   @question = Question.new(
     user_id:  @auth_user.id,
     content: params[:content],
@@ -205,9 +220,11 @@ get '/questions' do
   if params[:sort_by]
     case params[:sort_by]
     when 'rating'
-      @all_questions = Question.all.order(average_rating: :desc)
+      @all_questions = Question.all
+      @all_questions.sort {|q1, q2| q1.average_rating <=> q2.average_rating}
     when 'popularity'
-      @all_questions = Question.all.order(ratings_count: :desc)
+      @all_questions = Question.all
+      @all_questions.sort {|q1, q2| q1.ratings_count <=> q2.ratings_count}
     end
   end
   if params[:limit]
@@ -235,4 +252,24 @@ get '/tags/:id' do
   end
   @title = "All questions tagged with: #{@tag.name}"
   erb :'tags/show'
+end
+
+# Rate A Question
+
+post '/ratings/:id' do
+  @question = Question.find(params[:id])
+  @rating = Rating.create(
+    question_id: @question.id,
+    user_id:  @auth_user.id,
+    value: params[:question_rating]
+  )
+  redirect :"questions/#{@question.id}"
+end
+
+# Remove Rating From A Question
+
+get '/ratings/delete/:id' do
+  @question = Question.find(Rating.find(params[:id]).question_id)
+  Rating.find(params[:id]).destroy
+  redirect :"questions/#{@question.id}"
 end

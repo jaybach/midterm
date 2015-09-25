@@ -8,10 +8,11 @@
 
   <link rel="stylesheet" href="/stylesheets/normalize.css">
   <link rel="stylesheet" href="/stylesheets/application.css">
+  <link rel="stylesheet" href="/jquery-bar-rating/dist/themes/fontawesome-stars.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="/javascript/application.js"></script>
-  <script src="https://raw.githubusercontent.com/razorjack/quicksand/v1.4/jquery.quicksand.js"></script>
 
   <title><%= @title %></title>
 </head>
@@ -40,6 +41,18 @@
 
   <%= yield %>
 
+<!-- jQuery bar rating plugin -->
+<script src="/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
+<script type="text/javascript">
+   $(function() {
+      $('#rating').barrating({
+        theme: 'fontawesome-stars',
+        initialRating: 1,
+        showValues: true,
+        showSelectedRating: true
+      });
+   });
+</script>
 
 </body>
 

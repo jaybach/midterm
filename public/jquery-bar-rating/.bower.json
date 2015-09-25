@@ -1,0 +1,40 @@
+{
+  "name": "jquery-bar-rating",
+  "version": "1.1.1",
+  "homepage": "http://antenna.io/demo/jquery-bar-rating/examples/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/antennaio/jquery-bar-rating.git"
+  },
+  "authors": [
+    "Antenna.io <antenna@antenna.io>"
+  ],
+  "description": "Minimal, light-weight jQuery ratings.",
+  "main": "jquery.barrating.js",
+  "keywords": [
+    "jquery",
+    "ratings",
+    "rating"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": ">=1.7.2"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "examples"
+  ],
+  "_release": "1.1.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.1",
+    "commit": "860dbe0a0ff835aa9e00afb10c3df77d09a74bb7"
+  },
+  "_source": "git://github.com/antennaio/jquery-bar-rating.git",
+  "_target": "~1.1.1",
+  "_originalSource": "jquery-bar-rating",
+  "_direct": true
+}

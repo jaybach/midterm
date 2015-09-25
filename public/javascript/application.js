@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+// Getting answers input when a user submits a question
+
   var MIN_NO_OF_ANSWERS = 2;
   var MAX_NO_OF_ANSWERS = 5;
 
@@ -22,5 +24,73 @@ $(document).ready(function() {
       $('.answer:visible').last().hide();
     }
   });
+
+// Filtering by tags
+
+  $(function() {
+    $('.no_tag_filter_button').click(function(e) {
+      $('.all').show("slow");
+      e.preventDefault();
+    });
+  });
+
+  $(function() {
+    $('.tag1_filter_button').click(function(e) {
+      $('.all').hide();
+      $('.all.tag1').show("slow");
+      e.preventDefault();
+    });
+  });
+
+  $(function() {
+    $('.tag2_filter_button').click(function(e) {
+      $('.all').hide();
+      $('.all.tag2').show("slow");
+      e.preventDefault();
+    });
+  });
+
+  $(function() {
+    $('.tag3_filter_button').click(function(e) {
+      $('.all').hide();
+      $('.all.tag3').show("slow");
+      e.preventDefault();
+    });
+  });
+
+  $(function() {
+    $('.tag4_filter_button').click(function(e) {
+      $('.all').hide();
+      $('.all.tag4').show(500);
+      e.preventDefault();
+    });
+  });
+
+  $(function() {
+    $('.tag5_filter_button').click(function(e) {
+      $('.all').hide();
+      $('.all.tag5').show("slow");
+      e.preventDefault();
+    });
+  });
+
+  $(function() {
+    $('.tag6_filter_button').click(function(e) {
+      $('.all').hide();
+      $('.all.tag6').show("slow");
+      e.preventDefault();
+    });
+  });
+
+// jQuery bar rating plugin
+
+   $(function() {
+      $('#rating').barrating({
+        theme: 'fontawesome-stars',
+        initialRating: 1,
+        showValues: true,
+        showSelectedRating: true
+      });
+   });
 
 });

@@ -1,1 +1,69 @@
 <h1>Home Page</h1>
+
+<div class="questions_filter">
+
+  <p><a class="no_tag_filter_button" href="#all">All</a></p>
+  <p><a class="tag1_filter_button" href="#tag1">Tag 1</a></p>
+  <p><a class="tag2_filter_button" href="#tag2">Tag 2</a></p>
+  <p><a class="tag3_filter_button" href="#tag3">Tag 3</a></p>
+  <p><a class="tag4_filter_button" href="#tag4">Tag 4</a></p>
+  <p><a class="tag5_filter_button" href="#tag5">Tag 5</a></p>
+  <p><a class="tag5_filter_button" href="#tag6">Tag 6</a></p>
+
+  <ul class="all no_tag">
+    <% Question.all.each do |question| %>
+      <div class="question">
+        <li id=""><a href="/questions/<%= question.id %>"><%= question.content %></a></li>
+    <% end %>
+  </ul>
+
+  <ul class="all tag1">
+    <p>Questions on Tag 1:</p>
+    <% @tag1_questions.each do |question| %>
+      <div class="question">
+        <li id=""><a href="/questions/<%= question.id %>"><%= question.content %></a></li>
+    <% end %>
+  </ul>
+
+  <ul class="all tag2">
+    <p>Questions on Tag 2:</p>
+    <% @tag2_questions.each do |question| %>
+      <div class="question">
+        <li id=""><a href="/questions/<%= question.id %>"><%= question.content %></a></li>
+    <% end %>
+  </ul>
+
+  <ul class="all tag3">
+    <p>Questions on Tag 3:</p>
+    <% @tag3_questions.each do |question| %>
+      <div class="question">
+        <li id=""><a href="/questions/<%= question.id %>"><%= question.content %></a></li>
+    <% end %>
+  </ul>
+
+  <ul class="all tag4">
+    <p>Questions on Tag 4:</p>
+    <% @tag4_questions.each do |question| %>
+      <div class="question">
+        <li id=""><a href="/questions/<%= question.id %>"><%= question.content %></a></li>
+    <% end %>
+  </ul>
+
+  <ul class="all tag5">
+    <p>Questions on Tag 5:</p>
+    <% @tag5_questions.each do |question| %>
+      <div class="question">
+        <li id=""><a href="/questions/<%= question.id %>"><%= question.content %></a></li>
+    <% end %>
+  </ul>
+
+  <ul class="all tag6">
+    <p>Questions on Tag 6:</p>
+    <% @tag6_questions.each do |question| %>
+      <div class="question">
+        <li id=""><a href="/questions/<%= question.id %>"><%= question.content %></a></li>
+    <% end %>
+  </ul>
+
+</div>
+

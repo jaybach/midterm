@@ -10,7 +10,7 @@ class Question < ActiveRecord::Base
   validates :content, length: { minimum: 5, maximum: 200 }
 
   def average_rating
-    self.ratings.average(:value)
+    self.ratings.average(:value).to_f.round(2)
   end
 
   def ratings_count
