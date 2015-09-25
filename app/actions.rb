@@ -113,6 +113,11 @@ post '/tests' do
   end
 end
 
+# post '/tests/:id/edit' do
+#   @test = Test.find_by(id: params[:id])
+  
+
+
 post '/questions' do
   @question = Question.new(
     user_id:  @auth_user.id,

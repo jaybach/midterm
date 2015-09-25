@@ -1,7 +1,9 @@
 <h1><%= @test.name %></h1>
 
 <div>
-<h3> Current questions on text :</h3>
+
+<h3> Current questions on test :</h3>
+
 </div>
 
 <div> 
@@ -9,9 +11,10 @@
 
 <% @questions.each do |question| %>
   <div>
-    Question: <%= p question.content %>
+    Question #<%=question.id%>: <%= p question.content %>
     Created by: <%= question.user.user_name%>
 
-</div>
+    <input type="submit" value = "Add question to test" action = "/test/:id/edit">
+  </div>
 
 <% end %>
