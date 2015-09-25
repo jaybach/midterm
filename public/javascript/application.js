@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function() {
 
 // Getting answers input when a user submits a question
 
@@ -81,16 +81,3 @@ $(document).ready(function() {
       e.preventDefault();
     });
   });
-
-// jQuery bar rating plugin
-
-   $(function() {
-      $('#rating').barrating({
-        theme: 'fontawesome-stars',
-        initialRating: 1,
-        showValues: true,
-        showSelectedRating: true
-      });
-   });
-
-});
