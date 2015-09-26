@@ -24,7 +24,7 @@
   <div class="row">
     <div class="large-12 columns">
       <div class="top_panel">
-        <h1 id="greeting"><span class="hi">Hi, </span><span>Client</span></h1>
+        <h1 id="greeting"><span class="hi">Hi,</span><span><%= current_user.name %></span></h1>
         <div id="toggleLog">Log Out</div>
       </div>
     </div>
@@ -71,16 +71,20 @@
 
     <div class="container-right">
       <div class="container">
-        <% if @auth_user %>
+        <% if current_user %>
           <h1 class="test_name"><%= @test.name if @test %></h1>
-          <p><a href="/tests/<%= @test.id %>/test_results/new">Publish Test</a></p>
+          <p><a target="_blank" href="/tests/<%= @test.id %>/take_test">Open test URL</a></p>
+          <% if @test.logo %>
+            <div><img class="test_logo" width="100px" src="<%= @test.logo %>" alt="<%= @test.name %> - <%= @test.user.company %>"></div>
+          <% end %>
+
 
           <div>
             <h3> Current questions on test:</h3>
             <% @test.question_selections.each do |question_selection| %>
               <% question = question_selection.question %>
             <div class="questions">
-              <h4>Question #<%=question.id%>: <%= p question.content %></h4>
+              <h4>Q#<%=question.id%>: <a href="/questions/<%= question.id %>"><%= question.content %></a></h4>
               <h5>Created by: <%= question.user.user_name%></h5>
               <form method = "post" action = "/question-selections/<%= question_selection.id %>">
                 <input type="hidden" name="_method" value="delete">
@@ -99,10 +103,10 @@
 
         <% @questions.each do |question| %>
         <div class="questions">
-          <h4 class="black"><a href="/questions/<%= question.id %>">Question #<%=question.id%>: <%= p question.content %></a></h4>
+          <h4 class="black">Q#<%=question.id%>: <a href="/questions/<%= question.id %>"><%= question.content %></a></h4>
           <h5>Created by: <%= question.user.user_name%></h5>
           <form method = "post" action = "/question-selections">
-            <input class="button3" type="submit" value = "Add question to test">
+            <input class="button3" type="submit" value = "add">
             <input type ="hidden" name= "question_id" value = "<%=question.id%>">
             <input type ="hidden" name = "test_id" value = "<%= @test.id%>">
           </form>
@@ -112,25 +116,21 @@
       </div><!-- END OF DIV CLASS container -->
 
 
+    <% if @questions.where(user_id: current_user) && @questions.where(user_id: current_user) != [] %>
       <div class="container">
         <h3> Questions I wrote: </h3>
 
-        <% @questions.each do |question| %>
-          <% if question.user_id == session[:user_id] %>
+        <% @questions.where(user_id: current_user).each do |question| %>
             <div class="questions">
-              <h4 class="no_creator"><a href="/questions/<%= question.id %>">Question #<%=question.id%>: <%= p question.content %></a></h4>
-              <form method = "post" action = "/tests/:id/edit">
-                <input class="button3" type="submit" value = "Add question to test">
+              <h4 class="no_creator">Q#<%=question.id%>: <a href="/questions/<%= question.id %>"><%= question.content %></a></h4>
+              <form method = "post" action = "/question-selections">
+                <input class="button3" type="submit" value = "add">
                 <input type ="hidden" name= "question_id" value = "<%=question.id%>">
                 <input type ="hidden" name = "test_id" value = "<%= @test.id%>">
               </form>
             </div>
-          <% else %>
-            <div>
-              <strong>Access restricted. Please login first!</strong>
-            </div>
-          <% end %>
         <% end %>
+       <% end %>
       </div><!-- END OF DIV CLASS container -->
     </div><!-- END OF CONTAINER-RIGHT -->
   </div>

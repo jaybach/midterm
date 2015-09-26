@@ -118,7 +118,7 @@ post '/tests' do
   @new_test= Test.new(
     name: params[:name],
     user_id: current_user.id,
-    logo: nil
+    logo: params[:logo]
     )
   if @new_test.save
     redirect "/tests/#{@new_test.id}"
@@ -162,7 +162,7 @@ post '/question-selections' do
 end
 
 
-get '/tests/:id/test_results/' do
+get '/tests/:id/test_results' do
   @test = Test.find_by(id: params[:id])
   @all_test_results = TestResult.where(test_id: params[:id])
   erb :'test_results/index'
@@ -170,7 +170,7 @@ end
 
 #   @id = params[:id]
   # mailto: "" content = " /tests/<%=@id%>"
-get '/tests/:id/test_results/new' do 
+get '/tests/:id/take_test' do
   @test = Test.find_by(id: params[:id])
   @all_test_results = TestResult.where(test_id: params[:id])
   @new_result = TestResult.new
@@ -203,6 +203,7 @@ post '/tests/:id/test_results' do
     )
   if @test_result
     session[:message] = "Thank you! Your results have been submitted."
+    redirect :"thank_you/#{current_user.id}"
   else
     session[:error] = "You failed to put in a credential."
   end
@@ -365,4 +366,10 @@ get '/ratings/delete/:id' do
   @question = Question.find(Rating.find(params[:id]).question_id)
   Rating.find(params[:id]).destroy
   redirect :"questions/#{@question.id}"
+end
+
+# Thank You Page
+
+get '/thank_you/:id' do
+  erb :'thank_you'
 end

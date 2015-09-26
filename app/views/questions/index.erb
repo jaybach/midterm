@@ -4,7 +4,7 @@
 <a href="/questions">Most recent first</a>
 
 <div class="container">
-<h1>See all questions posted so far:</h1>
+<h1>See all <%= Question.count %> questions posted so far:</h1>
 <br>
 <% @all_questions.each do |question| %>
   <div class="question">
@@ -71,14 +71,14 @@
 <% end %>
 
 
-<% unless params[:offset].to_i == 0 %>
+<% if params[:offset].to_i != 0 %>
   <a href="questions?limit=<%= params[:limit] || 5 %>&offset=<%= ((params[:offset] || 0).to_i - (params[:limit] || 5).to_i).to_s %>">Prev</a>
 <% end %>
 
 <% if params[:offset].to_i + params[:limit].to_i > Question.count %>
   <a href="questions">Back to first page</a>
 <% else %>
-  <% unless Question.count < 5 %>
+  <% unless Question.count <= 5 %>
     <a href="questions?limit=<%= params[:limit] || 5 %>&offset=<%= ((params[:limit] || 5).to_i + (params[:offset] || 0).to_i).to_s %>">Next</a>
   <% end %>
 <% end %>

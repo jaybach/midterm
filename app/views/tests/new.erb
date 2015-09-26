@@ -35,7 +35,8 @@
       <div>
         <label class="label" for="name">Name of test:</label>
         <input class="input" type="text" name="name" value="<%=@new_test.name if @new_test %>">
-        <input type="hidden" name="user_id" value="<%= @auth_user.id if @new_test %>">
+        <label class="label" for="logo">Logo:</label>
+        <input class="input" type="text" name="logo">
       </div>
 
       <button class="button2" type="submit" class="btn btn-default">Create test</button>

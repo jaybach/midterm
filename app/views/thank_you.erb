@@ -1,0 +1,8 @@
+<h1>Thank you for taking this test!</h1>
+
+<h3>If you have any questions, please contact:</h3>
+
+<% test_owner = User.find(params[:id]) %>
+<p><strong><%= test_owner.name %></strong></p>
+<p><%= test_owner.company %></p>
+<p><%= test_owner.email %></p>

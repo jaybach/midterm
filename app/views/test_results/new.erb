@@ -1,5 +1,6 @@
 <h1> Take the following test! </h1>
 <h3> Test name: <%= @test.name%> </h3>
+<div><img class="test_logo" width="200px" src="<%= @test.logo %>" alt="<%= @test.name %> - <%= @test.user.company %>"></div>
 
 <div class="test_form">
 	<form method="post" action="/tests/<%= @test.id %>/test_results">

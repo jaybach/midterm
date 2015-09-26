@@ -1,18 +1,18 @@
-<% if @auth_user %>
+<% if current_user %>
 
-<div> 
-  <h1> 
+<div>
+  <h1>
     All Candidates Results for <em> <%=@test.name%></em> :
   </h1>
   <% @all_test_results.each do |result| %>
 	 <h3>
-    <a href="/tests/<%=@test.id%>/test_results/<%=result.id %>"><%=result.candidate_name%>
-    </a>
+    <a href="/tests/<%=@test.id%>/test_results/<%=result.id %>"><%=result.candidate_name%></a>
+    <p><%=result.candidate_score * 100%>%</p>
 	<% end %>
 </div>
 
   <% if @candidate %>
-   
+
   <h2><strong>  Current candidate result:</strong> </h2>
     <div>
       <%= erb :'test_results/show'%>

@@ -11,8 +11,6 @@ class Question < ActiveRecord::Base
 
   validates :content, length: { minimum: 5, maximum: 200 }
 
-  after_destroy :delete_question_selections, :delete_question_tags, :delete_question_answers
-
   def average_rating
     self.ratings.average(:value).to_f.round(2)
   end
