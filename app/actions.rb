@@ -47,7 +47,7 @@ post '/users' do
   if params[:password] == params[:password_confirmation]
     if @new_user.save
       auth_user(@new_user)
-      redirect '/'
+      erb :'users/show'
     else
       erb :'users/new'
     end
