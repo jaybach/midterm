@@ -1,0 +1,50 @@
+<!doctype html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <title>Profile Home Page</title>
+    <meta name="description" content="Documentation and reference library for ZURB Foundation. JavaScript, CSS, components, grid and more."/>
+    <meta name="author" content="ZURB, inc. ZURB network also includes zurb.com"/>
+    <meta name="copyright" content="ZURB, inc. Copyright (c) 2015"/>
+    <link rel="stylesheet" href="stylesheets/foundation.min.css"/>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/user.css"/>
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.6/zepto.js"></script>
+    <script src="../assets/js/modernizr.js"></script>
+  </head>
+
+<header>
+  <div id="profile-button">Return to profile page</div>
+</header>
+
+<body>
+
+  <% if current_user %>
+
+
+<div class="container2">
+  <h2>Your created tests:</h2>
+    <% @user_tests = Test.where(user_id: current_user.id) %>
+    <% @user_tests.each do |test| %>
+      <div class="container3">
+        <h3><a href="/tests/<%= test.id%>"><%= test.name %></a></h3>
+      </div>
+    <% end %>
+
+  <% else %>
+
+  <div>
+      <strong>Access restricted. Please login first!</strong>
+  </div>
+
+  <% end %>
+
+</div>
+
+  <div class="logo1"><img src="/images/marketeers.png" style="width: 50%; height: 50%"/></div>
+
+</body>

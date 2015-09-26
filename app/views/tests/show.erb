@@ -29,7 +29,7 @@
       </div>
     </div>
   </div>
- 
+
   <div class="row">
 
     <div id="side_bar" class="large-3 columns ">
@@ -73,6 +73,7 @@
       <div class="container">
         <% if @auth_user %>
           <h1 class="test_name"><%= @test.name if @test %></h1>
+          <p><a href="/tests/<%= @test.id %>/test_results/new">Publish Test</a></p>
 
           <div>
             <h3> Current questions on test:</h3>
@@ -89,7 +90,7 @@
           <% end %>
         </div>
       </div><!-- END OF DIV CLASS container -->
-    
+
 
 
 
