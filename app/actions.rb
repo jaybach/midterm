@@ -177,11 +177,14 @@ get '/tests/:id/test_results/new' do
   erb :'test_results/new'
 end
 
+
 get '/tests/:id/test_results/:id' do
   @test = Test.find_by(id: params[:captures][0])
+  @all_test_results = TestResult.where(test_id: params[:captures][0])
   @candidate = TestResult.find_by(test_id: params[:captures][0], id: params[:id])
-  erb :'test_results/show'
+  erb :'test_results/index'
 end
+
 
 post '/tests/:id/test_results' do
   @test = Test.find_by(id: params[:id])
@@ -199,7 +202,7 @@ post '/tests/:id/test_results' do
     test_id: @test.id
     )
   if @test_result
-    redirect "/tests/#{@test.id}/test_results/new"
+    session[:message] = "Thank you! Your results have been submitted."
   else
     session[:error] = "You failed to put in a credential."
   end
