@@ -23,6 +23,14 @@ def auth_user(user)
   session[:user_id] = user.id
 end
 
+def test_id(id)
+  @test = Test.find_by(id: id)
+end
+
+def all_test_results(test_id)
+    @all_test_results = TestResult.where(test_id: test_id)
+end
+
 # Homepage (Root path)
 get '/' do
   @title = 'Crowd-sourced test builders'
@@ -153,13 +161,26 @@ post '/question-selections' do
   end
 end
 
-# Test Results
 
-get '/tests/:id/test_results/new' do
+get '/tests/:id/test_results/' do
+  @test = Test.find_by(id: params[:id])
+  @all_test_results = TestResult.where(test_id: params[:id])
+  erb :'test_results/index'
+end
+
+#   @id = params[:id]
+  # mailto: "" content = " /tests/<%=@id%>"
+get '/tests/:id/test_results/new' do 
   @test = Test.find_by(id: params[:id])
   @all_test_results = TestResult.where(test_id: params[:id])
   @new_result = TestResult.new
   erb :'test_results/new'
+end
+
+get '/tests/:id/test_results/:id' do
+  @test = Test.find_by(id: params[:captures][0])
+  @candidate = TestResult.find_by(test_id: params[:captures][0], id: params[:id])
+  erb :'test_results/show'
 end
 
 post '/tests/:id/test_results' do
