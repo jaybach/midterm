@@ -1,9 +1,39 @@
+header {
+  display: block;
+  margin-left: 45%;
+  margin-top: 15px;
+}
+
+#profile-button {
+  background-color: #800000;
+  border: 1px solid black;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  float: right;
+  float: top;
+  font-size: 12px;
+  height: 20px;
+  margin-bottom: 5px;
+  margin-right: 20px;
+  margin-top: -30px;
+  padding-bottom: 20px;
+  padding-top: 1px;
+  position: relative;
+  text-align: center;
+  text-transform: translateY(-50%);
+  width: 70px;
+}
+
 body {
   background-color: #D3D3D3;
+  display: block;
 }
 
 .container {
   margin-left: 100px;
+  margin-top: 50px;
 }
 
 .container2 {
@@ -108,6 +138,6 @@ h5 {
 
 .logo1 {
   float: right;
-  margin-right: -15px;
-  margin-top: -415px;
+  margin-right: -100px;
+  margin-top: -500px;
 }

@@ -20,6 +20,7 @@ span.hi {
    -webkit-box-shadow: inset 0 0 10px #000000;
   box-shadow:         inset 0 0 10px #000000;
   border-radius: 4px;
+  color: black;
   display: block;
 /*  float: right;*/
   margin-top: 20px;
@@ -27,5 +28,3 @@ span.hi {
   padding-left: 10px;
   width: 72%;
 }
-
-
