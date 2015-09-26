@@ -97,11 +97,19 @@ get '/users/show' do
   erb :'users/show'
 end
 
+# List All Tests
+
+get '/tests' do
+  @title = 'Here are your tests!'
+  @user_tests = Test.where(user_id: session[:user_id]) # should do a partial here
+  erb :'tests/index'
+end
+
+
 # Add New Test
 
 get '/tests/new' do
   @title = 'Here are your tests, or create a new one!'
-  @test = Test.new
   @user_tests = Test.where(user_id: session[:user_id]) # should do a partial here
   erb :'tests/new'
 end
@@ -335,7 +343,6 @@ get '/tags' do
   @tag6_questions = tagged_questions(6)
   erb :'tags/index'
 end
-
 
 # Rate A Question
 

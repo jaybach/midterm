@@ -13,25 +13,9 @@
 					<input type="radio" name="questions[<%= qidx %>]" value="<%=answer.id%>">
 					Answer <%="#{idx + 1}" %>: <%= answer.content %>
 				</p>
-			<% end %> 
+			<% end %>
 			</fieldset>
 		<% end %>
 		<input type="submit" value="Submit">
 	</form>
-</div>
-
-<% if @auth_user %>
-<div> 
-<h3> All Candidates Results:
-<% @all_test_results.each do |result| %>
-	<div> 
-	<ul>
-	 <li> <%=result.candidate_name%> </li>
-	 <li> <%=result.candidate_email%></li>
-	 <li> <%=result.candidate_score*100%>%</li>
-	 </ul>
-	 </div>
-	<% end %>
-<% end %>
-
 </div>
