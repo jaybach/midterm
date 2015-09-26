@@ -3,18 +3,21 @@
   <h1><%= @question.content  %></h1>
   <p><em>Rating: <%= @question.average_rating ? @question.average_rating.round(2) : '-' %> </em></p>
 
+<% if current_user.tests.empty? == false %>
   <div>
     <label for="add_q_to_test">Add this question to one of your existing tests:</label>
       <form method = "post" action = "/question/<%= @question.id %>/add_to_test">
         <select id="user_tests" name="test_id">
           <% current_user.tests.each do |test| %>
-            <option value="<%= test.id %>"><%= test.name %></option>
+          <% if test.questions.find_by(id: @question.id) %>
+                <option value="<%= test.id %>"><%= test.name %></option>
+              <% end %>
           <% end %>
         </select>
         <button class="add_q_to_test" type="submit">Add</button>
       </form>
   </div>
-
+<% end %>
 
   <% unless @question.image == "" || @question.image == nil %>
     <img src="<%= @question.image %>" alt="Question <%= @question.id %>'s attachment">

@@ -28,7 +28,7 @@
         <% question = question_selection.question %>
     </div>
     <div>
-      <h4>Question #<%=question.id%>: <%= p question.content %></h4>
+      <h4><a href="/questions/<%= question.id %>">Question #<%=question.id%>: <%= question.content %></a></h4>
       <h5>Created by: <%= question.user.user_name%></h5>
       <form method = "post" action = "/question-selections/<%= question_selection.id %>">
         <input type="hidden" name="_method" value="delete">
@@ -44,7 +44,7 @@
 
   <% @questions.each do |question| %>
   <div>
-    <h4>Question #<%=question.id%>: <%= p question.content %></h4>
+    <h4><a href="/questions/<%= question.id %>">Question #<%=question.id%>: <%= question.content %></a></h4>
     <h5>Created by: <%= question.user.user_name%></h5>
     <form method = "post" action = "/question-selections">
       <input class="button3" type="submit" value = "Add question to test">
@@ -62,7 +62,7 @@
 
     <% if question.user_id == session[:user_id] %>
     <div>
-      <h4 class="no_creator">Question #<%=question.id%>: <%= p question.content %></h4>
+      <h4><a href="/questions/<%= question.id %>">Question #<%=question.id%>: <%= question.content %></a></h4>
       <form method = "post" action = "/tests/:id/edit">
         <input class="button3" type="submit" value = "Add question to test">
         <input type ="hidden" name= "question_id" value = "<%=question.id%>">
