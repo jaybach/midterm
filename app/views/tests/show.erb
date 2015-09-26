@@ -1,51 +1,76 @@
+<!doctype html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <title>Profile Home Page</title>
+    <meta name="description" content="Documentation and reference library for ZURB Foundation. JavaScript, CSS, components, grid and more."/>
+    <meta name="author" content="ZURB, inc. ZURB network also includes zurb.com"/>
+    <meta name="copyright" content="ZURB, inc. Copyright (c) 2015"/>
+    <link rel="stylesheet" href="stylesheets/foundation.min.css"/>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/user.css"/>
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.6/zepto.js"></script>
+    <script src="../assets/js/modernizr.js"></script>
+  </head>
+
+
+
+<body>
+
+<div class="container">
 <% if @auth_user %>
+  <h1 class="test_name"><%= @test.name if @test %></h1>
 
-<h1><%= @test.name if @test %></h1>
-<div>
-
-<h3> Current questions on test:</h3>
-<% @test.question_selections.each do |question_selection| %>
-<% question = question_selection.question %>
   <div>
-  Question #<%=question.id%>: <%= p question.content %>
-    Created by: <%= question.user.user_name%>
-  <form method = "post" action = "/question-selections/<%= question_selection.id %>">
-  <input type="hidden" name="_method" value="delete">
-  <input type="submit" value= "delete">
-  </form> </p>
-
+    <h3> Current questions on test:</h3>
+    <% @test.question_selections.each do |question_selection| %>
+      <% question = question_selection.question %>
+  </div>
+  <div>
+    <h4>Question #<%=question.id%>: <%= p question.content %></h4>
+    <h5>Created by: <%= question.user.user_name%></h5>
+    <form method = "post" action = "/question-selections/<%= question_selection.id %>">
+      <input type="hidden" name="_method" value="delete">
+      <input class="button3" type="submit" value= "delete">
+    </form> </p>
+<% end %>
+  </div>
 </div>
 
-<% end %>
 
-
-<div>
+<div class="container">
 <h3> All questions: </h3>
 
-<% @questions.each do |question| %>
+  <% @questions.each do |question| %>
   <div>
-    Question #<%=question.id%>: <%= p question.content %>
-    Created by: <%= question.user.user_name%>
+    <h4>Question #<%=question.id%>: <%= p question.content %></h4>
+    <h5>Created by: <%= question.user.user_name%></h5>
     <form method = "post" action = "/question-selections">
-    	<input type="submit" value = "Add question to test">
-    	<input type ="hidden" name= "question_id" value = "<%=question.id%>">
-    	<input type ="hidden" name = "test_id" value = "<%= @test.id%>">
-	</form>
+      <input class="button3" type="submit" value = "Add question to test">
+      <input type ="hidden" name= "question_id" value = "<%=question.id%>">
+      <input type ="hidden" name = "test_id" value = "<%= @test.id%>">
+  </form>
   </div>
 
 <% end %>
+</div>
 
+<div class="container">
 <h3> Questions I wrote: </h3>
 
   <% @questions.each do |question| %>
   <% if question.user_id == session[:user_id] %>
     <div>
-      Question #<%=question.id%>: <%= p question.content %>
-    <form method = "post" action = "/tests/:id/edit">
-      <input type="submit" value = "Add question to test">
-      <input type ="hidden" name= "question_id" value = "<%=question.id%>">
-      <input type ="hidden" name = "test_id" value = "<%= @test.id%>">
-     </form>
+      <h4 class="no_creator">Question #<%=question.id%>: <%= p question.content %></h4>
+      <form method = "post" action = "/tests/:id/edit">
+        <input class="button3" type="submit" value = "Add question to test">
+        <input type ="hidden" name= "question_id" value = "<%=question.id%>">
+        <input type ="hidden" name = "test_id" value = "<%= @test.id%>">
+      </form>
     </div>
   <% end %>
   <% end %>
@@ -55,3 +80,6 @@
   </div>
 
   <% end %>
+</div>
+
+</body>
