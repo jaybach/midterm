@@ -1,0 +1,16 @@
+<% if @auth_user %>
+
+<div> 
+  <h1> 
+    All Candidates Results for <em> <%=@test.name%></em> :
+  </h1>
+  <% @all_test_results.each do |result| %>
+	 <h3>
+    <a href="/tests/<%=@test.id%>/test_results/<%=result.id %>"><%=result.candidate_name%>
+    </a>
+	<% end %>
+<% else %>
+  <h1> Not authorized. </h1>
+<% end %>
+
+</div>
