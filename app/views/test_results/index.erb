@@ -9,8 +9,19 @@
     <a href="/tests/<%=@test.id%>/test_results/<%=result.id %>"><%=result.candidate_name%>
     </a>
 	<% end %>
+</div>
+
+  <% if @candidate %>
+   
+  <h2><strong>  Current candidate result:</strong> </h2>
+    <div>
+      <%= erb :'test_results/show'%>
+    </div>
+  <% end %>
+
 <% else %>
   <h1> Not authorized. </h1>
 <% end %>
 
-</div>
+
+

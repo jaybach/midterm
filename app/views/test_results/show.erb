@@ -1,7 +1,6 @@
-	<div> 
-	<ul>
-	 <li> <%=@candidate[:candidate_name]%> </li>
-	 <li> <%=@candidate[:candidate_email]%></li>
-	 <li> <%=@candidate[:candidate_score]*100%>%</li>
-	 </ul>
-	 </div>
+<div> 
+  <h3> <em> Name: <%=@candidate[:candidate_name]%> </em> </h3>
+	  
+   <strong> Email: <%=@candidate[:candidate_email]%> </strong>
+	 <p> <strong> Score on Test: <%=@candidate[:candidate_score]*100%>% </strong> </p>
+</div>
