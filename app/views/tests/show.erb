@@ -70,6 +70,7 @@
 
 
     <div class="container-right">
+
       <div class="container">
         <% if current_user %>
           <h1 class="test_name"><%= @test.name if @test %></h1>
@@ -84,11 +85,10 @@
             <% @test.question_selections.each do |question_selection| %>
               <% question = question_selection.question %>
             <div class="questions">
-              <h4>Q#<%=question.id%>: <a href="/questions/<%= question.id %>"><%= question.content %></a></h4>
-              <h5>Created by: <%= question.user.user_name%></h5>
+              <h4><a href="/questions/<%= question.id %>"><%= question.content %></a></h4>
               <form method = "post" action = "/question-selections/<%= question_selection.id %>">
                 <input type="hidden" name="_method" value="delete">
-                <input class="button3" type="submit" value= "delete">
+                <input class="button3" type="submit" value= "remove">
               </form>
             </div><!-- END DIV CLASS QUESTIONS -->
           <% end %>
@@ -96,6 +96,22 @@
       </div><!-- END OF DIV CLASS container -->
 
 
+    <div class="container">
+    <% if @questions.where(user_id: current_user) && @questions.where(user_id: current_user) != [] %>
+        <h3> Questions I wrote: </h3>
+
+        <% @questions.where(user_id: current_user).each do |question| %>
+            <div class="questions">
+              <h4 class="no_creator"><a href="/questions/<%= question.id %>"><%= question.content %></a></h4>
+              <form method = "post" action = "/question-selections">
+                <input class="button3" type="submit" value = "add">
+                <input type ="hidden" name= "question_id" value = "<%=question.id%>">
+                <input type ="hidden" name = "test_id" value = "<%= @test.id%>">
+              </form>
+            </div>
+        <% end %>
+       <% end %>
+      </div><!-- END OF DIV CLASS container -->
 
 
       <div class="container">
@@ -103,8 +119,7 @@
 
         <% @questions.each do |question| %>
         <div class="questions">
-          <h4 class="black">Q#<%=question.id%>: <a href="/questions/<%= question.id %>"><%= question.content %></a></h4>
-          <h5>Created by: <%= question.user.user_name%></h5>
+          <h4 class="black"><a href="/questions/<%= question.id %>"><%= question.content %></a></h4>
           <form method = "post" action = "/question-selections">
             <input class="button3" type="submit" value = "add">
             <input type ="hidden" name= "question_id" value = "<%=question.id%>">
@@ -115,23 +130,6 @@
         <% end %>
       </div><!-- END OF DIV CLASS container -->
 
-
-    <% if @questions.where(user_id: current_user) && @questions.where(user_id: current_user) != [] %>
-      <div class="container">
-        <h3> Questions I wrote: </h3>
-
-        <% @questions.where(user_id: current_user).each do |question| %>
-            <div class="questions">
-              <h4 class="no_creator">Q#<%=question.id%>: <a href="/questions/<%= question.id %>"><%= question.content %></a></h4>
-              <form method = "post" action = "/question-selections">
-                <input class="button3" type="submit" value = "add">
-                <input type ="hidden" name= "question_id" value = "<%=question.id%>">
-                <input type ="hidden" name = "test_id" value = "<%= @test.id%>">
-              </form>
-            </div>
-        <% end %>
-       <% end %>
-      </div><!-- END OF DIV CLASS container -->
     </div><!-- END OF CONTAINER-RIGHT -->
   </div>
   <% end %>
