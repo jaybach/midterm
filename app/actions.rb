@@ -10,6 +10,7 @@ helpers do
     QuestionTag.where(tag_id: tag.id).each do |qt_combination|
       tagged_questions << Question.find(qt_combination.question_id.to_i)
     end
+    binding.pry
     return tagged_questions
   end
 
@@ -26,12 +27,6 @@ end
 # Homepage (Root path)
 get '/' do
   @title = 'Crowd-sourced test builders'
-  # @tag1_questions = tagged_questions(1)
-  # @tag2_questions = tagged_questions(2)
-  # @tag3_questions = tagged_questions(3)
-  # @tag4_questions = tagged_questions(4)
-  # @tag5_questions = tagged_questions(5)
-  # @tag6_questions = tagged_questions(6)
   erb :index
 end
 
@@ -151,9 +146,9 @@ post '/question-selections' do
   end
 end
 
-#   @id = params[:id]
-  # mailto: "" content = " /tests/<%=@id%>"
-get '/tests/:id/test_results/new' do 
+# Test Results
+
+get '/tests/:id/test_results/new' do
   @test = Test.find_by(id: params[:id])
   @all_test_results = TestResult.where(test_id: params[:id])
   @new_result = TestResult.new
@@ -175,7 +170,6 @@ post '/tests/:id/test_results' do
     candidate_score: (correct/total),
     test_id: @test.id
     )
-  binding.pry
   if @test_result
     redirect "/tests/#{@test.id}/test_results/new"
   else
@@ -183,8 +177,6 @@ post '/tests/:id/test_results' do
   end
 
 end
-
-# Edit An Existing Test (Remove Questions From A Test)
 
 # Remove Questions From A Test
 
@@ -310,6 +302,20 @@ get '/tags/:id' do
   @title = "All questions tagged with: #{@tag.name}"
   erb :'tags/show'
 end
+
+# Show All Tags & Filter Questions By Tag
+
+get '/tags' do
+  @title = "Filter questions by tag"
+  @tag1_questions = tagged_questions(1)
+  @tag2_questions = tagged_questions(2)
+  @tag3_questions = tagged_questions(3)
+  @tag4_questions = tagged_questions(4)
+  @tag5_questions = tagged_questions(5)
+  @tag6_questions = tagged_questions(6)
+  erb :'tags/index'
+end
+
 
 # Rate A Question
 
