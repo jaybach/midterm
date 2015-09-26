@@ -82,4 +82,12 @@ $(function() {
     });
   });
 
+// Adding question to a test
+
+  $(function() {
+    $('select#user_tests').click(function(e) {
+      var question_selection = $('select option:selected').val()
+    });
+  });
+
 });

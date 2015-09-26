@@ -30,8 +30,8 @@
     <ul>
       <li role="presentation"><a href="/tracks">All tracks</a></li>
       <li role="presentation"><a href="/tracks/new">Post a new track</a></li>
-      <% if @auth_user %>
-        <li role="presentation"><a href="/logout">Log out (<%= @auth_user.name %>)</a></li>
+      <% if current_user %>
+        <li role="presentation"><a href="/logout">Log out (<%= current_user.name %>)</a></li>
       <% else %>
         <li role="presentation"><a href="/login">Login</a></li>
         <li role="presentation"><a href="/users/new">Register</a></li>

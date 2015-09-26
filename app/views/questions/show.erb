@@ -1,34 +1,46 @@
 <div class="container">
 
-  <h1 class="average_rating">Rating: <%= @question.average_rating ? @question.average_rating.round(2) : '-' %> </h1>
   <h1><%= @question.content  %></h1>
+  <p><em>Rating: <%= @question.average_rating ? @question.average_rating.round(2) : '-' %> </em></p>
+
+  <div>
+    <label for="add_q_to_test">Add this question to one of your existing tests:</label>
+      <form method = "post" action = "/question/<%= @question.id %>/add_to_test">
+        <select id="user_tests" name="test_id">
+          <% current_user.tests.each do |test| %>
+            <option value="<%= test.id %>"><%= test.name %></option>
+          <% end %>
+        </select>
+        <button class="add_q_to_test" type="submit">Add</button>
+      </form>
+  </div>
+
 
   <% unless @question.image == "" || @question.image == nil %>
     <img src="<%= @question.image %>" alt="Question <%= @question.id %>'s attachment">
   <% end %>
 
-  <br>
        <ul>
-        <% Answer.where(question_id: @question.id).each do |answer| %>
+        <% @question.answers.each do |answer| %>
           <li><%= answer.content %> (<%= answer.correct %>)</li>
         <% end %>
       </ul>
 
       <h4>Tags:</h4>
       <ul>
-        <% QuestionTag.where(question_id: @question.id).each do |qt_combination| %>
+        <% @question.question_tags.each do |qt_combination| %>
           <li><a href="../tags/<%= qt_combination.tag_id.to_i %>"><%= Tag.find(qt_combination.tag_id.to_i).name %></a></li>
         <% end %>
       </ul>
 
   <p><em><small>posted by <%= @user.name %> at <%= @question.created_at %>
-        <% if @auth_user && @question.user_id == @auth_user.id %>
+        <% if current_user && @question.user_id == current_user.id %>
         <a href="/questions/<%= @question.id %>/delete">(delete question)</a>
       <% end %>
      </small></em></p>
 
-   <% if @auth_user %>
-    <% if Rating.where(user_id: @auth_user.id).where(question_id: @question.id) != [] %>
+   <% if current_user %>
+    <% if current_user.ratings.where(question_id: @question.id) != [] %>
       <p>You've already rated this question.</p>
     <% else %>
       <%= erb :'ratings/new' %>
@@ -37,21 +49,21 @@
     <p>You have to be logged in to access this page!</p>
    <% end %>
 
-  <% if Rating.where(question_id: @question.id) != [] %>
+  <% if @question.ratings != [] %>
     <h3>Ratings for this track:</h3>
-    <% Rating.where(question_id: @question.id).each do |rating| %>
+    <% @question.ratings.each do |rating| %>
       <div class="rating">
           <p class="timestamp"><small><em><%= rating.created_at %></em></small></p>
           <p><strong>Posted by:</strong> <%= User.find_by_id(rating.user_id).name %></p>
-          <% if @auth_user && rating.user_id == @auth_user.id %>
+          <% if current_user && rating.user_id == current_user.id %>
             <p class="delete_rating"><a href="/ratings/delete/<%= rating.id %>">(delete)</a></p>
           <% end %>
           <% if rating.value %>
             <% rating.value.times do %>
-              <i class="fa fa-star"></i>
+              <i class="fa fa-star" style="color: #FFDF88"></i>
             <% end %>
             <% (5 - rating.value).times do %>
-              <i class="fa fa-star-o"></i>
+              <i class="fa fa-star-o" style="color: #FFDF88"></i>
             <% end %>
           <% end %></p>
           <br>

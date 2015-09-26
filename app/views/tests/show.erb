@@ -1,19 +1,17 @@
-<% if @auth_user %>
+<% if current_user %>
 
 <h1><%= @test.name if @test %></h1>
 <div>
 
 <h3> Current questions on test:</h3>
 <% @test.question_selections.each do |question_selection| %>
-<% question = question_selection.question %>
-  <div>
-  Question #<%=question.id%>: <%= p question.content %>
-    Created by: <%= question.user.user_name%>
+  <% question = question_selection.question %>
+  <div>Question #<%=question.id%>: <%= p question.content %>
+      Created by: <%= question.user.user_name%>
   <form method = "post" action = "/question-selections/<%= question_selection.id %>">
   <input type="hidden" name="_method" value="delete">
   <input type="submit" value= "delete">
   </form> </p>
-
 </div>
 
 <% end %>
@@ -41,7 +39,7 @@
   <% if question.user_id == session[:user_id] %>
     <div>
       Question #<%=question.id%>: <%= p question.content %>
-    <form method = "post" action = "/tests/:id/edit">
+    <form method = "post" action = "/question-selections">
       <input type="submit" value = "Add question to test">
       <input type ="hidden" name= "question_id" value = "<%=question.id%>">
       <input type ="hidden" name = "test_id" value = "<%= @test.id%>">
