@@ -1,7 +1,7 @@
 <title>All questions in the library</title>
 
-<a href="/questions?sort_by=rating">Sort by rating</a>
-<a href="/questions?sort_by=popularity">Sort by popularity</a>
+<a href="/questions?sort_by=rating">Best rated first</a>
+<a href="/questions">Most recent first</a>
 
 <div class="container">
 <h1>See all questions posted so far:</h1>
@@ -17,33 +17,59 @@
     <p>
       <% unless question.average_rating == 0 %>
         <em>rating: <%= question.average_rating %></em>
+
+        <% if question.average_rating %>
+            <% question.average_rating.to_i.times do %>
+              <i class="fa fa-star" style="color: #FFDF88"></i>
+            <% end %>
+            <% (5 - question.average_rating.to_i).times do %>
+              <i class="fa fa-star-o" style="color: #D2D2D2"></i>
+            <% end %>
+        <% end %>
+
       <% end %>
     </p>
 
-    <p><em>posted by <%= User.find(question.user_id).name %>
-      <% if @auth_user && question.user_id == @auth_user.id %>
+    <p><em>posted by <%= question.user.name %>
+      <% if current_user && question.user_id == current_user.id %>
         <a href="/questions/<%= question.id %>/delete">(delete question)</a>
       <% end %>
       </em>
     </p>
 
+    <% if current_user.tests.empty? == false %>
+      <div>
+      <label for="add_q_to_test">Add this question to one of your existing tests:</label>
+        <form method = "post" action = "/question/<%= question.id %>/add_to_test">
+          <select id="user_tests" name="test_id">
+            <% current_user.tests.each do |test| %>
+              <% if test.questions.find_by(id: question.id) %>
+                <option value="<%= test.id %>"><%= test.name %></option>
+              <% end %>
+            <% end %>
+          </select>
+          <button class="add_q_to_test" type="submit">Add</button>
+        </form>
+      </div>
+    <% end %>
+
       <ul>
-        <% Answer.where(question_id: question.id).each do |answer| %>
+        <% question.answers.each do |answer| %>
           <li><%= answer.content %> (<%= answer.correct %>)</li>
         <% end %>
       </ul>
 
     <p>Tags</p>
-    <p>
       <ul>
-        <% QuestionTag.where(question_id: question.id).each do |qt_combination| %>
+        <% question.question_tags.each do |qt_combination| %>
           <li><a href="../tags/<%= qt_combination.tag_id.to_i %>"><%= Tag.find(qt_combination.tag_id.to_i).name %></a></li>
         <% end %>
       </ul>
-    </p>
     </hr><hr/>
   </div>
+
 <% end %>
+
 
 <% unless params[:offset].to_i == 0 %>
   <a href="questions?limit=<%= params[:limit] || 5 %>&offset=<%= ((params[:offset] || 0).to_i - (params[:limit] || 5).to_i).to_s %>">Prev</a>

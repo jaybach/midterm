@@ -1,11 +1,7 @@
 # Helpers
 helpers do
   def current_user
-    @auth_user = User.find(session[:user_id]) if session[:user_id]
-  end
-
-  def auth_user(user)
-    session[:user_id] = user.id
+    @auth_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
   def tagged_questions(id)
@@ -21,6 +17,10 @@ end
 
 before do
   current_user
+end
+
+def auth_user(user)
+  session[:user_id] = user.id
 end
 
 # Homepage (Root path)
@@ -91,7 +91,7 @@ end
 # My Account Page
 
 get '/users/show' do
-  @title = "#{@auth_user.name}'s account"
+  @title = "#{current_user.name}'s account"
   erb :'users/show'
 end
 
@@ -107,7 +107,7 @@ end
 post '/tests' do
   @new_test= Test.new(
     name: params[:name],
-    user_id: @auth_user.id,
+    user_id: current_user.id,
     logo: nil
     )
   if @new_test.save
@@ -134,7 +134,7 @@ get '/tests/:id' do
   erb :'tests/show'
 end
 
-# Edit An Existing Test (Add Questions To Test)
+# Add Questions To A Test
 
 post '/question-selections' do
   @question_id = params[:question_id].to_i
@@ -207,7 +207,7 @@ post '/questions' do
 
   @tags = params[:tags]
   @question = Question.new(
-    user_id:  @auth_user.id,
+    user_id:  current_user.id,
     content: params[:content],
     image: params[:image_url]
   )
@@ -253,6 +253,14 @@ get '/questions/:id' do
   @other_questions_from_this_user = Question.where(user_id: @user.id).where.not(id: params[:id])
   erb :'questions/show'
 end
+
+# Add question to a test from question page
+
+post '/question/:id/add_to_test' do
+  QuestionSelection.create(question_id: params[:id], test_id: params[:test_id])
+  redirect '/tests/' + params[:test_id]
+end
+
 
 # Delete A Question
 
@@ -309,7 +317,7 @@ post '/ratings/:id' do
   @question = Question.find(params[:id])
   @rating = Rating.create(
     question_id: @question.id,
-    user_id:  @auth_user.id,
+    user_id:  current_user.id,
     value: params[:question_rating]
   )
   redirect :"questions/#{@question.id}"

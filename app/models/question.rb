@@ -1,6 +1,7 @@
 class Question < ActiveRecord::Base
 
   belongs_to :user
+  has_many :answers
   has_many :question_selections
   has_many :tests, :through => :question_selections
   has_many :question_tags
