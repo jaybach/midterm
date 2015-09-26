@@ -177,11 +177,6 @@ get '/tests/:id/test_results/new' do
   erb :'test_results/new'
 end
 
-# get '/tests/:id/test_results/:id' do
-#   @test = Test.find_by(id: params[:captures][0])
-#   @candidate = TestResult.find_by(test_id: params[:captures][0], id: params[:id])
-#   erb :'test_results/show'
-# end
 
 get '/tests/:id/test_results/:id' do
   @test = Test.find_by(id: params[:captures][0])
