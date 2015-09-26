@@ -1,3 +1,31 @@
+<!doctype html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <title>Profile Home Page</title>
+    <meta name="description" content="Documentation and reference library for ZURB Foundation. JavaScript, CSS, components, grid and more."/>
+    <meta name="author" content="ZURB, inc. ZURB network also includes zurb.com"/>
+    <meta name="copyright" content="ZURB, inc. Copyright (c) 2015"/>
+    <link rel="stylesheet" href="stylesheets/foundation.min.css"/>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/user.css"/>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/create_question.css"/>
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.6/zepto.js"></script>
+    <script src="../assets/js/modernizr.js"></script>
+  </head>
+
+<header>
+  <div id="profile-button">Return to profile page</div>
+</header>
+
+
+
+<body>
+
 <div class="container">
 
    <h1>Add a question to the library:</h1>
@@ -11,27 +39,33 @@
   <form id="question-form" method="post" action="/questions">
 
       <div>
-        <label for="content">Question:</label>
-        <input type="text" placeholder="e.g. To set up Dynamic Remarketing, you must do which of these things?" name="content" value="<%= @new_question.content if @new_question %>">
+        <label class="label" for="content">Question:</label>
+          <input type="text" style="height: 20px; width: 600px" placeholder="e.g. To set up Dynamic Remarketing, you must do which of these things?" name="content" value="<%= @new_question.content if @new_question %>">
+          <div class="space"></div>
       </div>
 
       <div>
-        <label for="content">Add some tags to your question:</label>
-        <select multiple name="tags[]">
-        <% Tag.all.each do |tag| %>
-            <option value="<%= tag.name %>"><%= tag.name %></option>
-        <% end %>
-        </select>
+        <label class="label" for="content">Add some tags to your question:</label>
+        <div class="corral">
+          <select multiple name="tags[]">
+          <% Tag.all.each do |tag| %>
+              <option value="<%= tag.name %>"><%= tag.name %></option>
+          <% end %>
+          </select>
+          <div class="space"></div>
+        </div>
       </div>
 
       <div>
-        <label for="image">Embed an image in your question:</label>
-        <input type="url" placeholder="image url" name="image_url" value="<%= @new_question.image if @new_question %>">
+        <label class="label" for="image">Embed an image in your question:</label>
+        <input type="url" style="height: 20px; width: 600px" placeholder="image url" name="image_url" value="<%= @new_question.image if @new_question %>">
+        <div class="space"></div>
       </div>
 
       <div>
-        <label for="no_of_answers">How many answers do you want to add for this question? (min. 2, max. 5)</label>
-        <button class="add_answer">+</button> <button class="remove_answer">-</button>
+        <label class="label" for="no_of_answers">How many answers do you want to add for this question? (min. 2, max. 5)</label>
+        <button class="add_answer button">+</button> <button class="remove_answer button">-</button>
+        <div class="space"></div>
       </div>
 
       <div class="answers">
@@ -40,8 +74,8 @@
           <label for="answer1_content">Answer 1:</label>
           <input type="text" name="answer1_content" class="answer_content">
           <label for="answer1_correct">Correct?</label>
-          <input type="radio" name="answer1_correct" value="true">Yes
-          <input type="radio" name="answer1_correct" value="false">No
+            <input type="radio" name="answer1_correct" value="true">Yes
+            <input type="radio" name="answer1_correct" value="false">No
         </div>
 
         <div class="answer">
@@ -79,7 +113,7 @@
       </div>
 
       <div id="submit_button">
-      <button type="submit">Submit</button>
+      <button class="button" type="submit">Submit</button>
       </div>
 
   </form>
@@ -93,3 +127,5 @@
   <% end %>
 
 </div>
+
+</body>
