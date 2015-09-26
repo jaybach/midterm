@@ -1,0 +1,31 @@
+body {
+  background-color: white;
+}
+
+span.hi {
+  color: black;
+}
+
+.container {
+  display: block;
+}
+
+.container-right {
+  display: inline-block;
+  width: 72%;
+}
+
+.questions {
+  -moz-box-shadow:    inset 0 0 10px #000000;
+   -webkit-box-shadow: inset 0 0 10px #000000;
+  box-shadow:         inset 0 0 10px #000000;
+  border-radius: 4px;
+  display: block;
+/*  float: right;*/
+  margin-top: 20px;
+  margin-right: 70px;
+  padding-left: 10px;
+  width: 72%;
+}
+
+

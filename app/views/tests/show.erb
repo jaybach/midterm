@@ -10,6 +10,7 @@
     <meta name="copyright" content="ZURB, inc. Copyright (c) 2015"/>
     <link rel="stylesheet" href="stylesheets/foundation.min.css"/>
     <link type="text/css" rel="stylesheet" href="/stylesheets/user.css"/>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/test_create.css"/>
 
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
@@ -20,66 +21,119 @@
 
 
 <body>
-
-<div class="container">
-<% if @auth_user %>
-  <h1 class="test_name"><%= @test.name if @test %></h1>
-
-  <div>
-    <h3> Current questions on test:</h3>
-    <% @test.question_selections.each do |question_selection| %>
-      <% question = question_selection.question %>
-  </div>
-  <div>
-    <h4>Question #<%=question.id%>: <%= p question.content %></h4>
-    <h5>Created by: <%= question.user.user_name%></h5>
-    <form method = "post" action = "/question-selections/<%= question_selection.id %>">
-      <input type="hidden" name="_method" value="delete">
-      <input class="button3" type="submit" value= "delete">
-    </form> </p>
-<% end %>
-  </div>
-</div>
-
-
-<div class="container">
-<h3> All questions: </h3>
-
-  <% @questions.each do |question| %>
-  <div>
-    <h4>Question #<%=question.id%>: <%= p question.content %></h4>
-    <h5>Created by: <%= question.user.user_name%></h5>
-    <form method = "post" action = "/question-selections">
-      <input class="button3" type="submit" value = "Add question to test">
-      <input type ="hidden" name= "question_id" value = "<%=question.id%>">
-      <input type ="hidden" name = "test_id" value = "<%= @test.id%>">
-  </form>
-  </div>
-
-<% end %>
-</div>
-
-<div class="container">
-<h3> Questions I wrote: </h3>
-
-  <% @questions.each do |question| %>
-  <% if question.user_id == session[:user_id] %>
-    <div>
-      <h4 class="no_creator">Question #<%=question.id%>: <%= p question.content %></h4>
-      <form method = "post" action = "/tests/:id/edit">
-        <input class="button3" type="submit" value = "Add question to test">
-        <input type ="hidden" name= "question_id" value = "<%=question.id%>">
-        <input type ="hidden" name = "test_id" value = "<%= @test.id%>">
-      </form>
+  <div class="row">
+    <div class="large-12 columns">
+      <div class="top_panel">
+        <h1 id="greeting"><span class="hi">Hi, </span><span>Client</span></h1>
+        <div id="toggleLog">Log Out</div>
+      </div>
     </div>
-  <% end %>
-  <% end %>
-  <% else %>
-  <div>
-    <strong>Access restricted. Please login first!</strong>
   </div>
+ 
+  <div class="row">
 
-  <% end %>
-</div>
+    <div id="side_bar" class="large-3 columns ">
+      <div class="panel">
+        <a href="#"><img class="image1" src="/images/acme.jpg"></a>
+
+        <div class="section-container vertical-nav" data-section data-options="deep_linking: false; one_up: true">
+          <section class="section">
+            <h4>Tests</h4>
+          </section>
+          <section class="section">
+            <h5 class="title"><a href="#"><span>Create new test</span></a></h5>
+          </section>
+          <section class="section">
+            <h5 class="title"><a href="#"><span>View saved tests</span></a></h5>
+          </section>
+          <section class="section">
+            <h5 class="title"><a href="#"><span>View test scores</span></a></h5>
+          </section>
+
+          <section class="section">
+            <h4>Questions</h4>
+          </section>
+          <section class="section">
+            <h5 class="title"><a href="#"><span>View all questions</span></a></h5>
+          </section>
+          <section class="section">
+            <h5 class="title"><a href="#"><span>View your submissions</span></a></h5>
+          </section>
+          <section class="section">
+            <h5 class="title"><a href="#"><span>Submit new question</span></a></h5>
+          </section>
+        </div><!--END OF div class section-container vertical-nav -->
+      </div><!-- END OF DIV class panel -->
+    </div><!-- END OF DIV id="side_bar"  -->
+
+
+
+    <div class="container-right">
+      <div class="container">
+        <% if @auth_user %>
+          <h1 class="test_name"><%= @test.name if @test %></h1>
+
+          <div>
+            <h3> Current questions on test:</h3>
+            <% @test.question_selections.each do |question_selection| %>
+              <% question = question_selection.question %>
+<!--           </div> -->
+            <div class="questions">
+              <h4>Question #<%=question.id%>: <%= p question.content %></h4>
+              <h5>Created by: <%= question.user.user_name%></h5>
+              <form method = "post" action = "/question-selections/<%= question_selection.id %>">
+                <input type="hidden" name="_method" value="delete">
+                <input class="button3" type="submit" value= "delete">
+              </form>
+            </div><!-- END DIV CLASS QUESTIONS -->
+          <% end %>
+        </div>
+      </div><!-- END OF DIV CLASS container -->
+    
+
+
+
+      <div class="container">
+        <h3> All questions: </h3>
+
+        <% @questions.each do |question| %>
+        <div class="questions">
+          <h4>Question #<%=question.id%>: <%= p question.content %></h4>
+          <h5>Created by: <%= question.user.user_name%></h5>
+          <form method = "post" action = "/question-selections">
+            <input class="button3" type="submit" value = "Add question to test">
+            <input type ="hidden" name= "question_id" value = "<%=question.id%>">
+            <input type ="hidden" name = "test_id" value = "<%= @test.id%>">
+          </form>
+        </div>
+
+        <% end %>
+      </div><!-- END OF DIV CLASS container -->
+
+
+      <div class="container">
+        <h3> Questions I wrote: </h3>
+
+        <% @questions.each do |question| %>
+          <% if question.user_id == session[:user_id] %>
+            <div class="questions">
+              <h4 class="no_creator">Question #<%=question.id%>: <%= p question.content %></h4>
+              <form method = "post" action = "/tests/:id/edit">
+                <input class="button3" type="submit" value = "Add question to test">
+                <input type ="hidden" name= "question_id" value = "<%=question.id%>">
+                <input type ="hidden" name = "test_id" value = "<%= @test.id%>">
+              </form>
+            </div>
+          <% end %>
+        <% end %>
+        <% else %>
+        <div>
+          <strong>Access restricted. Please login first!</strong>
+        </div>
+
+        <% end %>
+      </div><!-- END OF DIV CLASS container -->
+    </div><!-- END OF CONTAINER-RIGHT -->
+  </div>
 
 </body>
