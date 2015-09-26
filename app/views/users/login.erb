@@ -1,23 +1,49 @@
+<!doctype html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <title>Profile Home Page</title>
+    <meta name="description" content="Documentation and reference library for ZURB Foundation. JavaScript, CSS, components, grid and more."/>
+    <meta name="author" content="ZURB, inc. ZURB network also includes zurb.com"/>
+    <meta name="copyright" content="ZURB, inc. Copyright (c) 2015"/>
+    <link rel="stylesheet" href="stylesheets/foundation.min.css"/>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/user.css"/>
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.6/zepto.js"></script>
+    <script src="../assets/js/modernizr.js"></script>
+  </head>
+
+
+<body>
+
 <div class="container">
    <h1>User login</h1>
    <br>
   <% if @error %>
     <div>
-      <strong>Some issues with your login, please fix them:</strong>
+      <strong>There are problems with your login attempt. Please try again:</strong>
       <p><%= @error %></p>
     </div>
   <% end %>
   <form method="post" action="/login">
     <div>
-      <label for="user_name">Username:</label>
-      <input type="text" placeholder="your username comes here" name="user_name" value="<%= @unauth_user.user_name if @unauth_user %>">
+      <label class="label" for="user_name">Username:</label>
+      <input class="input" type="text" placeholder="enter user name here" name="user_name" value="<%= @unauth_user.user_name if @unauth_user %>">
     </div>
         <div>
-      <label for="password">Password:</label>
-      <input type="password" placeholder="your password comes here" name="password">
+      <label class="label" for="password">Password:</label>
+      <input class="input" type="password" placeholder="enter password here" name="password">
     </div>
     <div>
-      <button type="submit">Login</button>
+      <button class="button" type="submit">Log in</button>
     </div>
   </form>
 </div>
+
+<div class="logo"><img src="/images/marketeers.png" style="width: 50%; height: 50%"/></div>
+
+</body>

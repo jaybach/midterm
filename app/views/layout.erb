@@ -1,29 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!doctype html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Documentation and reference library for ZURB Foundation. JavaScript, CSS, components, grid and more."/>
+    <meta name="author" content="ZURB, inc. ZURB network also includes zurb.com"/>
+    <meta name="copyright" content="ZURB, inc. Copyright (c) 2015"/>
+    <link rel="stylesheet" href="/stylesheets/foundation.min.css"/>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/index.css"/>
 
-  <link rel="stylesheet" href="/stylesheets/normalize.css">
-  <link rel="stylesheet" href="/stylesheets/application.css">
-  <link rel="stylesheet" href="/jquery-bar-rating/dist/themes/fontawesome-stars.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.6/zepto.js"></script>
+    <!-- <script src="../assets/js/modernizr.js"></script> -->
 
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="/jquery-bar-rating/dist/themes/fontawesome-stars.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
   <script src="/javascript/application.js"></script>
 
-  <title><%= @title %></title>
-</head>
+    <title>Page Title</title>
+    <!-- <title><%= @title %></title> -->
+  </head>
 
 <body>
-
-  <header>
-    <div class="container">
-      <img src="../images/logo-musketeers-final.png" class="img-responsive" alt="Life without music is a joke!">
-    </div>
-  </header>
+  <%= yield %>
+</body>
 
    <!-- Navigation bar -->
   <div class="container">
@@ -39,7 +43,6 @@
     </ul>
   </div>
 
-  <%= yield %>
 
 <!-- jQuery bar rating plugin -->
 <script src="/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
@@ -54,6 +57,6 @@
    });
 </script>
 
-</body>
+
 
 </html>
