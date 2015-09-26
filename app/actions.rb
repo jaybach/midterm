@@ -10,7 +10,6 @@ helpers do
     QuestionTag.where(tag_id: tag.id).each do |qt_combination|
       tagged_questions << Question.find(qt_combination.question_id.to_i)
     end
-    binding.pry
     return tagged_questions
   end
 
