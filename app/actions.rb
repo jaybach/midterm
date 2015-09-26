@@ -155,8 +155,33 @@ end
   # mailto: "" content = " /tests/<%=@id%>"
 get '/tests/:id/test_results/new' do 
   @test = Test.find_by(id: params[:id])
+  @all_test_results = TestResult.where(test_id: params[:id])
   @new_result = TestResult.new
-  erb :'tests/test_results/new'
+  erb :'test_results/new'
+end
+
+post '/tests/:id/test_results' do
+  @test = Test.find_by(id: params[:id])
+  @name = params[:name]
+  @email = params[:email]
+  answer_ids = params[:questions].flat_map do |i, q|
+    q
+  end
+  correct = Answer.where(id: answer_ids, correct: true).count.to_f
+  total = Test.find(@test.id).questions.count.to_f
+  @test_result = TestResult.create(
+    candidate_name: @name,
+    candidate_email: @email,
+    candidate_score: (correct/total),
+    test_id: @test.id
+    )
+  binding.pry
+  if @test_result
+    redirect "/tests/#{@test.id}/test_results/new"
+  else
+    session[:error] = "You failed to put in a credential."
+  end
+
 end
 
 # Edit An Existing Test (Remove Questions From A Test)
