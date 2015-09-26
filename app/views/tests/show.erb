@@ -50,6 +50,7 @@
             <h5 class="title"><a href="#"><span>View test scores</span></a></h5>
           </section>
 
+
           <section class="section">
             <h4>Questions</h4>
           </section>
@@ -77,7 +78,6 @@
             <h3> Current questions on test:</h3>
             <% @test.question_selections.each do |question_selection| %>
               <% question = question_selection.question %>
-<!--           </div> -->
             <div class="questions">
               <h4>Question #<%=question.id%>: <%= p question.content %></h4>
               <h5>Created by: <%= question.user.user_name%></h5>
@@ -98,7 +98,7 @@
 
         <% @questions.each do |question| %>
         <div class="questions">
-          <h4>Question #<%=question.id%>: <%= p question.content %></h4>
+          <h4><a href="/questions/<%= question.id %>">Question #<%=question.id%>: <%= p question.content %></a></h4>
           <h5>Created by: <%= question.user.user_name%></h5>
           <form method = "post" action = "/question-selections">
             <input class="button3" type="submit" value = "Add question to test">
@@ -117,23 +117,23 @@
         <% @questions.each do |question| %>
           <% if question.user_id == session[:user_id] %>
             <div class="questions">
-              <h4 class="no_creator">Question #<%=question.id%>: <%= p question.content %></h4>
+              <h4 class="no_creator"><a href="/questions/<%= question.id %>">Question #<%=question.id%>: <%= p question.content %></a></h4>
               <form method = "post" action = "/tests/:id/edit">
                 <input class="button3" type="submit" value = "Add question to test">
                 <input type ="hidden" name= "question_id" value = "<%=question.id%>">
                 <input type ="hidden" name = "test_id" value = "<%= @test.id%>">
               </form>
             </div>
+          <% else %>
+            <div>
+              <strong>Access restricted. Please login first!</strong>
+            </div>
           <% end %>
-        <% end %>
-        <% else %>
-        <div>
-          <strong>Access restricted. Please login first!</strong>
-        </div>
-
         <% end %>
       </div><!-- END OF DIV CLASS container -->
     </div><!-- END OF CONTAINER-RIGHT -->
   </div>
+  <% end %>
+
 
 </body>

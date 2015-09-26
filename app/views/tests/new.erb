@@ -26,23 +26,24 @@
    <h1>Create a test:</h1>
    <br>
 
-  <% if @auth_user %>
+  <% if current_user %>
 
   <form method="post" action="/tests">
 
       <div>
-      <label class="label" for="name">Name of test:</label>
-      <input class="input" type="text" name="name" value="<%=@new_test.name if @new_test %>">
-      <input type="hidden" name="user_id" value="<%= @auth_user.id if @new_test %>">
+        <label class="label" for="name">Name of test:</label>
+        <input class="input" type="text" name="name" value="<%=@new_test.name if @new_test %>">
+        <input type="hidden" name="user_id" value="<%= @auth_user.id if @new_test %>">
       </div>
 
       <button class="button2" type="submit" class="btn btn-default">Create test</button>
   </form>
+
 </div>
 
 <div class="container2">
   <h2>Your created tests:</h2>
-    <% @user_tests = Test.where(user_id: @auth_user.id) %>
+    <% @user_tests = Test.where(user_id: current_user.id) %>
     <% @user_tests.each do |test| %>
       <div class="container3">
         <h3><a href="/tests/<%= test.id%>"><%= test.name %></a></h3>
