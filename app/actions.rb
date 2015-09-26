@@ -34,12 +34,6 @@ end
 # Homepage (Root path)
 get '/' do
   @title = 'Crowd-sourced test builders'
-  # @tag1_questions = tagged_questions(1)
-  # @tag2_questions = tagged_questions(2)
-  # @tag3_questions = tagged_questions(3)
-  # @tag4_questions = tagged_questions(4)
-  # @tag5_questions = tagged_questions(5)
-  # @tag6_questions = tagged_questions(6)
   erb :index
 end
 
@@ -159,6 +153,7 @@ post '/question-selections' do
   end
 end
 
+
 get '/tests/:id/test_results/' do
   @test = Test.find_by(id: params[:id])
   @all_test_results = TestResult.where(test_id: params[:id])
@@ -202,8 +197,6 @@ post '/tests/:id/test_results' do
   end
 
 end
-
-# Edit An Existing Test (Remove Questions From A Test)
 
 # Remove Questions From A Test
 
@@ -329,6 +322,20 @@ get '/tags/:id' do
   @title = "All questions tagged with: #{@tag.name}"
   erb :'tags/show'
 end
+
+# Show All Tags & Filter Questions By Tag
+
+get '/tags' do
+  @title = "Filter questions by tag"
+  @tag1_questions = tagged_questions(1)
+  @tag2_questions = tagged_questions(2)
+  @tag3_questions = tagged_questions(3)
+  @tag4_questions = tagged_questions(4)
+  @tag5_questions = tagged_questions(5)
+  @tag6_questions = tagged_questions(6)
+  erb :'tags/index'
+end
+
 
 # Rate A Question
 

@@ -1,78 +1,37 @@
-<h1>Home Page</h1>
+<link type="text/css" rel="stylesheet" href="/stylesheets/homepage.css"/>
 
-<div class="questions_filter">
+<header>
+  <div class="logo_top"><img src="/images/marketeers.png" style="width: 10%; height: 10%"/></div>
+</header>
 
-  <p><a class="no_tag_filter_button" href="#all">All</a></p>
-  <p><a class="tag1_filter_button" href="#tag1">Tag 1</a></p>
-  <p><a class="tag2_filter_button" href="#tag2">Tag 2</a></p>
-  <p><a class="tag3_filter_button" href="#tag3">Tag 3</a></p>
-  <p><a class="tag4_filter_button" href="#tag4">Tag 4</a></p>
-  <p><a class="tag5_filter_button" href="#tag5">Tag 5</a></p>
-  <p><a class="tag5_filter_button" href="#tag6">Tag 6</a></p>
-<% if !Question.all.empty?%>
-  <ul class="all no_tag">
-    <% Question.all.each do |question| %>
-      <div class="question">
-        <li id=""><a href="/questions/<%= question.id %>"><%= question.content %></a></li>
-      </div>
-    <% end %>
-  </ul>
+<body>
 
-  <ul class="all tag1">
-    <p>Questions on Tag 1:</p>
-    <% @tag1_questions.each do |question| %>
-      <div class="question">
-        <li id=""><a href="/questions/<%= question.id %>"><%= question.content %></a></li>
-      </div>
-    <% end %>
-  </ul>
+<div class="top">
 
-  <ul class="all tag2">
-    <p>Questions on Tag 2:</p>
-    <% @tag2_questions.each do |question| %>
-      <div class="question">
-        <li id=""><a href="/questions/<%= question.id %>"><%= question.content %></a></li>
-      </div>
-    <% end %>
-  </ul>
+  <h1><span>One for all and all for one!</span></h1>
 
-  <ul class="all tag3">
-    <p>Questions on Tag 3:</p>
-    <% @tag3_questions.each do |question| %>
-      <div class="question">
-        <li id=""><a href="/questions/<%= question.id %>"><%= question.content %></a></li>
-      </div>
-    <% end %>
-  </ul>
+  <h2><span2>Testing just got easier thanks to your peers</span2><h2>
+  <h2><span2>all coming together as Marketeers!</span2></h2>
 
-  <ul class="all tag4">
-    <p>Questions on Tag 4:</p>
-    <% @tag4_questions.each do |question| %>
-      <div class="question">
-        <li id=""><a href="/questions/<%= question.id %>"><%= question.content %></a></li>
-      </div>
-    <% end %>
-  </ul>
-
-  <ul class="all tag5">
-    <p>Questions on Tag 5:</p>
-    <% @tag5_questions.each do |question| %>
-      <div class="question">
-        <li id=""><a href="/questions/<%= question.id %>"><%= question.content %></a></li>
-      </div>
-    <% end %>
-  </ul>
-
-  <ul class="all tag6">
-    <p>Questions on Tag 6:</p>
-    <% @tag6_questions.each do |question| %>
-      <div class="question">
-        <li id=""><a href="/questions/<%= question.id %>"><%= question.content %></a></li>
-      </div>
-    <% end %>
-  </ul>
+  <div id="toggleLog1">Log In</div>
+  <div id="toggleLog2">Sign Up</div>
 
 </div>
 
-<% end %>
 
+<div class="bottom">
+<div class="real-bottom">
+  <div class="logo"><img src="/images/marketeers.png"></div>
+
+  <div class="text">
+  <h4>Become a Marketeer and assemble tests for marketing hiring and promotions using questions supplied by your peers.  And help your peers by submitting your own tests questions!</h4>
+  </div>
+</div>
+</div>
+
+
+</body>
+
+<footer>
+  <p>&copy; Copyright The 3 Marketeers</p>
+</footer>

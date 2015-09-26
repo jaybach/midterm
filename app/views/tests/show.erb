@@ -98,7 +98,7 @@
 
         <% @questions.each do |question| %>
         <div class="questions">
-          <h4><a href="/questions/<%= question.id %>">Question #<%=question.id%>: <%= p question.content %></a></h4>
+          <h4 class="black"><a href="/questions/<%= question.id %>">Question #<%=question.id%>: <%= p question.content %></a></h4>
           <h5>Created by: <%= question.user.user_name%></h5>
           <form method = "post" action = "/question-selections">
             <input class="button3" type="submit" value = "Add question to test">
