@@ -1,0 +1,37 @@
+<h1> Take the following test! </h1>
+<h3> Test name: <%= @test.name%> </h3>
+
+<div class="test_form">
+	<form method="post" action="/tests/<%= @test.id %>/test_results">
+		<input type="text" name ="name" placeholder="What is your full name?" value="<%=@new_result.candidate_name if @new_result%>">
+		<input type="text" placeholder="What is your email?" name ="email" value="<%= @new_result.candidate_email if @new_result %>">
+		<% @test.questions.each_with_index do |question, qidx| %>
+			<fieldset>
+				<legend>Question <%= "#{qidx + 1}"%>: <%=question.content %></legend>
+				<% question.answers.each_with_index do |answer, idx| %>
+				<p>
+					<input type="radio" name="questions[<%= qidx %>]" value="<%=answer.id%>">
+					Answer <%="#{idx + 1}" %>: <%= answer.content %>
+				</p>
+			<% end %> 
+			</fieldset>
+		<% end %>
+		<input type="submit" value="Submit">
+	</form>
+</div>
+
+<% if @auth_user %>
+<div> 
+<h3> All Candidates Results:
+<% @all_test_results.each do |result| %>
+	<div> 
+	<ul>
+	 <li> <%=result.candidate_name%> </li>
+	 <li> <%=result.candidate_email%></li>
+	 <li> <%=result.candidate_score*100%>%</li>
+	 </ul>
+	 </div>
+	<% end %>
+<% end %>
+
+</div>

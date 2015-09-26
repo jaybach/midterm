@@ -26,12 +26,12 @@ end
 # Homepage (Root path)
 get '/' do
   @title = 'Crowd-sourced test builders'
-  @tag1_questions = tagged_questions(1)
-  @tag2_questions = tagged_questions(2)
-  @tag3_questions = tagged_questions(3)
-  @tag4_questions = tagged_questions(4)
-  @tag5_questions = tagged_questions(5)
-  @tag6_questions = tagged_questions(6)
+  # @tag1_questions = tagged_questions(1)
+  # @tag2_questions = tagged_questions(2)
+  # @tag3_questions = tagged_questions(3)
+  # @tag4_questions = tagged_questions(4)
+  # @tag5_questions = tagged_questions(5)
+  # @tag6_questions = tagged_questions(6)
   erb :index
 end
 
@@ -151,6 +151,41 @@ post '/question-selections' do
   end
 end
 
+#   @id = params[:id]
+  # mailto: "" content = " /tests/<%=@id%>"
+get '/tests/:id/test_results/new' do 
+  @test = Test.find_by(id: params[:id])
+  @all_test_results = TestResult.where(test_id: params[:id])
+  @new_result = TestResult.new
+  erb :'test_results/new'
+end
+
+post '/tests/:id/test_results' do
+  @test = Test.find_by(id: params[:id])
+  @name = params[:name]
+  @email = params[:email]
+  answer_ids = params[:questions].flat_map do |i, q|
+    q
+  end
+  correct = Answer.where(id: answer_ids, correct: true).count.to_f
+  total = Test.find(@test.id).questions.count.to_f
+  @test_result = TestResult.create(
+    candidate_name: @name,
+    candidate_email: @email,
+    candidate_score: (correct/total),
+    test_id: @test.id
+    )
+  binding.pry
+  if @test_result
+    redirect "/tests/#{@test.id}/test_results/new"
+  else
+    session[:error] = "You failed to put in a credential."
+  end
+
+end
+
+# Edit An Existing Test (Remove Questions From A Test)
+
 # Remove Questions From A Test
 
 delete '/question-selections/:id' do
@@ -169,6 +204,7 @@ get '/questions/new' do
 end
 
 post '/questions' do
+
   @tags = params[:tags]
   @question = Question.new(
     user_id:  current_user.id,
@@ -191,18 +227,21 @@ post '/questions' do
         question_id:@question.id
         )
 
-        @tags.each do |tag_name|
-          QuestionTag.create(
+        if @tags
+          @tags.each do |tag_name|
+            QuestionTag.create(
             question_id: @question.id,
             tag_id: Tag.find_by(name: tag_name).id
             )
+            end
         end
       end
-  end
+    end
     redirect '/questions'
   else
     redirect 'questions/new'
   end
+
 end
 
 # Show A Question
